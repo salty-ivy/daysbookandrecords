@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags navigation_tags wagtailimages_tags %}
+{% load custom_filters %}
+
+{% block content %}
+    <div>
+        <div class="columns">
+            <div class="column is-12">
+                <h1 class="title">{{ page.title }}</h1>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column is-12 has-text-white mb-4">
+            {% if page.intro %}
+                <p class="intro">{{ page.intro|richtext }}</p>
+            {% endif %}
+            {% if page.description %}
+                {{ page.description|richtext }}
+            {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="box has-text-white">
+        <div class="field subtitle mb-4"> 
+            {% if page.description %}
+                {{ page.heading|richtext }}
+            {% endif %}
+        </div>
+        <form action="{% pageurl page %}" id="myForm" method="POST">
+            {% csrf_token %}
+            {% if form.subject.errors %}
+                <ol>
+                    {% for error in form.subject.errors %}
+                        <li><strong>{{ error|escape }}</strong></li>
+                    {% endfor %}
+                </ol>
+            {% endif %}
+
+            {% for field in form %}
+                <div class="field" aria-required={% if field.field.required %}"true"{% else %}"false"{% endif %}>
+                    <label class="label">{{ field.label_tag }}</label>
+                    {% if field.help_text %}
+                        <p class="help">{{ field.help_text }}</p>
+                    {% endif %}
+                    <div class="control">
+                        {{ field|add_class:"input" }}
+                    </div>
+                </div>
+            {% endfor %}
+            <altcha-widget challengeurl="/altcha/challenge/"></altcha-widget>
+            <input class="button" type="submit" style="margin-top:8px;">
+        </form>
+    </div>
+{% endblock content %}

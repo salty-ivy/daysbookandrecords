@@ -1,0 +1,39 @@
+{% extends "base.html" %} 
+{% load static %} 
+{% load wagtailcore_tags %} 
+{% load wagtailimages_tags %}
+{% load youtube_filter %}
+
+{% block content %}
+<div class="has-text-white">
+  <div class="columns">
+    <div class="column">
+      <h1 class="title">{{ page.title }}</h1>
+    </div>
+  </div>
+  <div class="columns">
+    <div class="column is-two-thirds">{{ page.body|richtext }}</div>
+    <div class="column">
+      <div class="gallery">
+        <div>
+          {% for embed in page.extra_embed %}
+          {% if embed.block_type == "image_block" %}
+            {% image embed.value.image original as original_image %}
+              <span
+                class="thumbnail"
+                style="
+                    background-image: url('{{ original_image.url }}');
+                "
+              ></span>
+            {% elif embed.block_type == 'embed_block' %}
+              {% with embed.value.url|youtube_id as video_id %}
+                <iframe class="lazyload thumbnail" data-src="https://www.youtube.com/embed/{{ video_id }}" width="60%" height="85%" referrerpolicy="strict-origin-when-cross-origin" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" title="youtube video embed" allowfullscreen></iframe>
+              {% endwith %}
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

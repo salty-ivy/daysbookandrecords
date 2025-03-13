@@ -1,0 +1,54 @@
+{% load static wagtailcore_tags wagtailuserbar %}
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+    <head>
+        <meta charset="utf-8" name="referrer" content="strict-origin-when-cross-origin" />
+        <title>
+            {% block title %}
+                {% if page.seo_title %}
+                    {{ page.seo_title }}
+                {% else %}
+                    {{ page.title }}
+                {% endif %}
+            {% endblock %}
+            {% block title_suffix %}
+                {% wagtail_site as current_site %}
+                {% if current_site and current_site.site_name %}- {{ current_site.site_name }}{% endif %}
+            {% endblock %}
+        </title>
+        {% if page.search_description %}<meta name="description" content="{{ page.search_description }}" />{% endif %}
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {% if request.in_preview_panel %}<base target="_blank">{% endif %}
+        <link rel="icon" href="{% static '../static/img/archaos.png' %}" type="image/x-icon">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+        <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+        {% block extra_css %}{% endblock %}
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZWL7W52P3M"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-ZWL7W52P3M');
+        </script>
+    </head>
+    <body class="{% block body_class %}{% endblock %}">
+        {% wagtailuserbar %}
+        {% include "includes/header.html" %}
+        <div class="site-wrapper">
+            <div id="page-container" class="section">
+                {% block content %}{% endblock %}
+            </div>
+            {% include "includes/footer.html" %}
+        </div>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+        <script type="module" src="https://cdn.jsdelivr.net/npm/altcha/dist/altcha.min.js"></script>
+        <script type="text/javascript" src="{% static 'js/archaos.js' %}"></script>
+        <script src="{% static 'js/lazysizes.min.js' %}" async=""></script>
+        {% block extra_js %}{% endblock %}
+    </body>
+</html>

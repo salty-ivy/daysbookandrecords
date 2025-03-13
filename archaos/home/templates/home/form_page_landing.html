@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+<div>
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="title">{{ page.title|richtext }}</h1>
+        </div>
+        <div class="col-md-8 index-header__body-introduction">
+            <div class="description-container">
+                <div class="intro">
+                    <p>{{ page.thank_you_text|richtext }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- {{ page.thank_you_text|richtext }} -->
+{% endblock content %}

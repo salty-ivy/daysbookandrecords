@@ -1,0 +1,85 @@
+{% load static wagtailcore_tags navigation_tags %}
+{% get_navbar_pages as navbar_pages %}
+
+<script src="../../static/js/navbar.js"></script>
+<nav class="navbar is-spaced is-transparent navbar-gradient">
+  <div class="navbar-brand">
+    <a href="/" class="navbar-item">
+      <img src="../../static/img/book.png"
+      alt="daysbooksandrecords" style="max-height: 65px" class="px-1"/>
+    </a>
+    <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu" id="navMenu">
+    <div class="navbar-end">
+      {% for nav_page in navbar_pages %}
+        {% if nav_page.content_type.model == 'galleryindexpage' %}
+          <a href="{% pageurl nav_page %}" class="navbar-item has-text-white px-6 mx-4 is-uppercase">{{ nav_page.title }}</a>
+        {% elif nav_page.content_type.model == 'storiespage' %}
+             {% if nav_page.specific.is_dropdown_enabled %}
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a href="{% pageurl nav_page %}" class="navbar-link has-text-white px-6 mx-4 is-uppercase">{{ nav_page.title }}</a>
+                    <div class="dropdown-toggle"></div>
+                    <div class="navbar-dropdown is-right is-boxed">
+                      {% for title in nav_page.specific.get_story_titles %}
+                          {% if title.original %}
+                            <a href="/stories/#{{ title.slug }}" class="navbar-item is-tab has-text-white">{{ title.original|title }}</a>
+                          {% endif %}
+                      {% endfor %}
+                    </div>
+                </div>
+             {% else %}
+                 <a href="{% pageurl nav_page %}" class="navbar-item has-text-white px-6 mx-4 is-uppercase">{{ nav_page.title }}</a>
+             {% endif %}
+        {% else %}
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a href="{% pageurl nav_page %}" class="navbar-link has-text-white px-6 mx-4 is-uppercase">{{ nav_page.title }}</a>
+            <div class="dropdown-toggle"></div>
+              <div class="navbar-dropdown is-right is-boxed">
+                {% if nav_page.content_type.model == "homepage" %}
+                  {% for item in nav_page.get_children.live %}
+                    {% if item.content_type.model == "newarticlepage" or item.content_type.model == "formpage" %}
+                      {% if item.title != "Pierrot Bidon" %}
+                        <a href="{% pageurl item %}" class="navbar-item is-tab has-text-white">{{ item.title }}</a>
+                      {% endif %}
+                    {% endif %}
+                  {% endfor %}
+                {% else %}
+                  {% for item in nav_page.get_children.live %}
+                    <a href="{% pageurl item %}" class="navbar-item is-tab has-text-white">{{ item.title }}</a>
+                  {% endfor %}
+                {% endif %}
+              </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+      </div>
+  </div>
+</nav>
+<br />
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const populateMapIndex = () => {
+          const myMapTitlesList = JSON.parse(localStorage.getItem('myMapTitlesList'));
+          if (myMapTitlesList) {
+              const mapIndexContent = document.getElementById('map-index-content');
+              mapIndexContent.innerHTML = '';
+              myMapTitlesList.forEach(item => {
+                  const anchor = document.createElement('a');
+                  anchor.href = `/map-index/#${item}`;
+                  anchor.textContent = item;
+                  anchor.classList.add('navbar-item', 'is-tab', 'has-text-white');
+                  mapIndexContent.appendChild(anchor);
+              });
+          }
+      };
+      document.addEventListener('titlesStored', populateMapIndex);
+      populateMapIndex();
+  });
+</script>
+
