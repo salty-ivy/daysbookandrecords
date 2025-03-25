@@ -3,10 +3,21 @@ body,html {
   margin: 0;
   position: relative;
   scroll-behavior: smooth;
+  background-color: #f2f2f2;
 }
 h1,h2,h3,h4,h5,h6 {
   font-size:revert;
   font-weight:400;
+}
+body,
+h1, h2, h3, h4, h5, h6,
+p, span, a,
+.button,
+.navbar-item,
+.card-title,
+.title,
+.subtitle {
+  color: #5a5a5a !important;
 }
 body::before {
   background-image: url("../img/background.jpg"),
