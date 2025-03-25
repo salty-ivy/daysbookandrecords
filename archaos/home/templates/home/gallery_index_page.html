@@ -4,12 +4,12 @@
 {% load custom_filters %}
 {% block content %}
     <h1 class="title">{{ page.title }}</h1>
-    <div class="columns has-text-white">
+    <div class="columns ">
         <div class="column">
             <p>{{ page.description|richtext }}</p>
         </div>
     </div>
-    <div class="fixed-grid has-2-cols has-text-white">
+    <div class="fixed-grid has-2-cols ">
         <div class="grid">
     {% for gallery in gallery_items %}
         <a href="{% pageurl gallery %}" class="cell box has-text-light gallery-index-cell">

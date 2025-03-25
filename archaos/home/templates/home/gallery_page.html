@@ -6,12 +6,12 @@
 {% load custom_filters %}
 {% block content %}
     <h1 class="title">{{ page.title }}</h1>
-    <div class="columns has-text-white">
+    <div class="columns ">
         <div class="column">
             <p>{{ page.description|richtext }}</p>
         </div>
     </div>
-<div class="section has-text-white">
+<div class="section ">
     <div class="swiper">
         <div class="swiper-wrapper">
             {% for carousel_item in page.carousel %}

@@ -12,7 +12,7 @@
 {% block content %}
     <script type="text/javascript" src="{% static 'js/modal.js' %}"></script>
     <h1 class="title">{{ page.title }}</h1>
-    <div class="columns has-text-white">
+    <div class="columns ">
         <div class="column">
             <p>{{ page.description|richtext }}</p>
         </div>
@@ -22,12 +22,12 @@
         {% include_block block.value.story_heading %}
     </div>
 
-        <div class="box has-text-white">
+        <div class="box ">
             {% include_block block.value.story_description %}
         </div>
 
         {% for sub_block in block.value.story_item %}
-            <div class="columns has-text-white js-modal-trigger glow-on-hover" data-target="{{ sub_block.value.story_item_title }}">
+            <div class="columns  js-modal-trigger glow-on-hover" data-target="{{ sub_block.value.story_item_title }}">
                 <div class="column is-2 has-text-centered has-text-weight-semibold is-size-5">
                     {{ sub_block.value.story_item_title|truncate_words:15|safe }}
                 </div>
@@ -65,7 +65,7 @@
                     <button class="delete column is-1" aria-label="close"></button>
                   </header>
                   <section class="modal-card-body">
-                    <div class="has-text-white">
+                    <div class="">
                         {{ sub_block.value.story_item_description|richtext }}
                     </div>
                         <div class="fixed-grid has-2-cols is-flex is-justify-content-center is-align-items-center">   

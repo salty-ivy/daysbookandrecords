@@ -3,7 +3,7 @@
 <figure>
     {% picture self.image format-{jpeg} sizes="(max-width: 768px) 200px, 900px" loading="lazy" %}
     {% if self.caption or self.attribution or self.title %}
-        <figcaption class="p-1 mt-2 has-text-left has-text-white">
+        <figcaption class="p-1 mt-2 has-text-left ">
             {% if self.title %}
                 <div class="is-size-4 has-text-weight-semibold">{{ self.title }}</div>
             {% endif %}
