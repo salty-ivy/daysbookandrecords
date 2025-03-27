@@ -28,7 +28,7 @@
                     <div class="navbar-dropdown is-right is-boxed">
                       {% for title in nav_page.specific.get_story_titles %}
                           {% if title.original %}
-                            <a href="/stories/#{{ title.slug }}" class="navbar-item has-text-weight-bold is-tab ">{{ title.original|title }}</a>
+                            <a href="/stories/#{{ title.slug }}" class="navbar-item has-text-weight-bold is-tab">{{ title.original|title }}</a>
                           {% endif %}
                       {% endfor %}
                     </div>
@@ -37,7 +37,8 @@
                  <a href="{% pageurl nav_page %}" class="navbar-item has-text-weight-bold px-6 mx-4 is-uppercase">{{ nav_page.title }}</a>
              {% endif %}
         {% else %}
-          <div class="navbar-item has-dropdown is-hoverable">
+          <a href="{% pageurl nav_page %}" class="navbar-item has-text-weight-bold px-6 mx-4 is-uppercase">{{ nav_page.title }}</a>
+          {% comment %} <div class="navbar-item has-dropdown is-hoverable">
             <a href="{% pageurl nav_page %}" class="navbar-link has-text-weight-bold px-6 mx-4 is-uppercase">{{ nav_page.title }}</a>
             <div class="dropdown-toggle"></div>
               <div class="navbar-dropdown is-right is-boxed">
@@ -55,7 +56,7 @@
                   {% endfor %}
                 {% endif %}
               </div>
-          </div>
+          </div> {% endcomment %}
         {% endif %}
       {% endfor %}
       </div>

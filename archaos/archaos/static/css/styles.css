@@ -5,6 +5,10 @@ body,html {
   scroll-behavior: smooth;
   background-color: #f2f2f2;
 }
+.footer.footer-gradient {
+  background: #f2f2f2 !important;
+}
+
 h1,h2,h3,h4,h5,h6 {
   font-size:revert;
   font-weight:400;
@@ -20,8 +24,6 @@ p, span, a,
   color: #5a5a5a !important;
 }
 body::before {
-  background-image: url("../img/background.jpg"),
-    linear-gradient(rgb(21, 21, 21), rgba(21, 21, 21, 0.600));
   background-blend-mode: overlay;
   background-repeat: no-repeat;
   background-size: cover;
@@ -63,6 +65,7 @@ body::before {
 
 .navbar-menu {
   font-size: 400;
+  color: #5a5a5a !important;
 }
 .navbar-gradient {
   background: linear-gradient(180deg, rgba(21, 21, 21, 0), rgba(21, 21, 21, 0));
@@ -303,3 +306,152 @@ figcaption {
     font-size: 0.9rem;
   }
 }
+
+.modal .modal-card,
+.modal .modal-card-title,
+.modal .modal-card-body,
+.modal .modal-card-body p,
+.modal .modal-card-body a {
+  color: white !important;
+}
+
+
+/* Remove default hover background and set text color to red */
+.navbar-item:hover, 
+.navbar-link:hover {
+  background-color: transparent !important; /* No black background */
+  color: #ee174b !important; /* Red text */
+}
+
+/* Ensure dropdown items also follow the same rule */
+.navbar-dropdown .navbar-item:hover {
+  background-color: transparent !important;
+  color: #ee174b !important;
+}
+
+/* Optional: Add an underline effect for better UX */
+
+.navbar-dropdown {
+  background-color: white !important; /* Change to desired color */
+
+}
+
+/* Ensure dropdown background is white from the start */
+.navbar-dropdown {
+  background-color: white !important;
+
+}
+
+/* Force all dropdown items to have a white background */
+.navbar-dropdown .navbar-item {
+  background-color: white !important;
+  color: #5a5a5a !important; /* Default text color */
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+/* Change color on hover */
+.navbar-dropdown .navbar-item:hover {
+  background-color: white !important;
+  color: #ee174b !important; /* Red text on hover */
+}
+
+/* Optional: Add box shadow to dropdown for better visibility */
+.navbar-dropdown {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Change color of Swiper navigation buttons */
+.swiper-button-prev, 
+.swiper-button-next {
+  color: #5a5a5a !important; /* Set arrow color */
+}
+
+/* Change Swiper pagination bullet color */
+.swiper-pagination-bullet {
+  background-color: #5a5a5a !important; /* Default bullet color */
+}
+
+/* Change active pagination bullet color */
+.swiper-pagination-bullet-active {
+  background-color: #ee174b !important; /* Optional: Red for active bullet */
+}
+
+/* Force gallery page content to have the correct background */
+.gallery-page {
+  background-color: #f2f2f2 !important; 
+}
+
+/* Fix if Swiper elements have a dark background */
+.swiper, .swiper-wrapper, .swiper-slide {
+  background-color: transparent !important;
+}
+
+/* Ensure section is also using correct background */
+.section {
+  background-color: #f2f2f2 !important;
+}
+
+
+/* Ensure the title and caption have an off-white color */
+figure figcaption {
+  color: #5a5a5a !important; /* Apply off-white color */
+}
+
+/* If needed, apply the color specifically to title and caption */
+figure figcaption .is-size-4 {
+  color: #5a5a5a !important; /* Title color */
+}
+
+figure figcaption .is-size-5 {
+  color: #5a5a5a !important; /* Caption color */
+}
+
+
+/* Default state: Light red shade with subtle transparency */
+.gallery-index-cell {
+  background: rgba(252, 229, 234, 0.9); /* Light red with slight transparency */
+  padding: 16px;
+  border-radius: 12px; /* Softer rounded edges */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  transition: all 0.3s ease-in-out;
+  backdrop-filter: blur(0px); /* No blur initially */
+  position: relative;
+  overflow: hidden; /* Prevents the shimmer from going outside */
+}
+
+/* On hover: Glassmorphism effect with a gradient blur */
+.gallery-index-cell:hover {
+  background: linear-gradient(
+    to bottom right,
+    rgba(252, 229, 234, 0.6),
+    rgba(255, 255, 255, 0.3)
+  ); /* Blurred gradient effect */
+  backdrop-filter: blur(12px); /* Stronger blur for glass effect */
+  box-shadow: 0px 6px 20px rgba(238, 23, 75, 0.3); /* Red-tinted glow */
+  transform: scale(1.02); /* Slight zoom-in for effect */
+}
+
+/* Shimmer effect: Moving light reflection */
+.gallery-index-cell::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%; /* Start way outside the element */
+  width: 120%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 30%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 70%
+  ); /* White shimmer */
+  transform: skewX(-25deg);
+  transition: left 0.4s ease-in-out;
+}
+
+/* Activate shimmer on hover */
+.gallery-index-cell:hover::before {
+  left: 120%; /* Move shimmer from left to right */
+  transition: left 0.8s ease-in-out;
+}
+
