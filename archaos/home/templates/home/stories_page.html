@@ -18,13 +18,12 @@
         </div>
     </div>
     {% for block in page.body %}
-    <div class="title story-header-mt" id="{{ block.value.story_heading.heading_text|slugify_heading }}">
-        {% include_block block.value.story_heading %}
-    </div>
-
-        <div class="box has-text-white ">
-            {% include_block block.value.story_description %}
+    <div class="story-header-mt story-box mb-5" id="{{ block.value.story_heading.heading_text|slugify_heading }}">
+        <div class="title">
+            {% include_block block.value.story_heading %}
         </div>
+        {% include_block block.value.story_description %}
+    </div>
 
         {% for sub_block in block.value.story_item %}
             <div class="columns  js-modal-trigger glow-on-hover" data-target="{{ sub_block.value.story_item_title }}">
