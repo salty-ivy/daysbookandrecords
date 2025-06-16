@@ -1,0 +1,76 @@
+<!-- home_page.html -->
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block title %}Home - Days Books & Records{% endblock %}
+
+{% block content %}
+<div class="story-item">
+    <h1>Welcome to Days Books & Records</h1>
+    {% if page.intro %}
+        {{ page.intro|richtext }}
+    {% endif %}
+</div>
+
+<div class="section-separator"></div>
+
+<div class="story-item">
+    <h2>Featured Books</h2>
+    <div class="items-grid">
+        {% for book in recent_books %}
+            <div class="item-card">
+                {% if book.image %}
+                    <img src="{{ book.image.url }}" alt="{{ book.title }}" class="item-image">
+                {% endif %}
+                <h3 class="item-title">{{ book.title }}</h3>
+                <p class="item-author">by {{ book.author }}</p>
+                <p class="item-price">${{ book.price }}</p>
+                <span class="item-genre">{{ book.genre }}</span>
+                <span class="condition-badge condition-{{ book.condition }}">{{ book.get_condition_display }}</span>
+                {% if book.sub_genre.all %}
+                    <div class="sub-genres">
+                        {% for tag in book.sub_genre.all %}
+                            <span class="sub-genre-tag">{{ tag.name }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% if book.description %}
+                    <p>{{ book.description|richtext|truncatewords:20 }}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+    <a href="/books/" class="btn">View All Books</a>
+</div>
+
+<div class="section-separator"></div>
+
+<div class="story-item">
+    <h2>Featured Records</h2>
+    <div class="items-grid">
+        {% for record in recent_records %}
+            <div class="item-card">
+                {% if record.image %}
+                    <img src="{{ record.image.url }}" alt="{{ record.title }}" class="item-image">
+                {% endif %}
+                <h3 class="item-title">{{ record.title }}</h3>
+                <p class="item-author">by {{ record.artist }}</p>
+                <p class="item-price">${{ record.price }}</p>
+                <span class="item-genre">{{ record.genre }}</span>
+                <span class="condition-badge condition-{{ record.condition }}">{{ record.get_condition_display }}</span>
+                {% if record.sub_genre.all %}
+                    <div class="sub-genres">
+                        {% for tag in record.sub_genre.all %}
+                            <span class="sub-genre-tag">{{ tag.name }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% if record.description %}
+                    <p>{{ record.description|richtext|truncatewords:20 }}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+    <a href="/records/" class="btn">View All Records</a>
+</div>
+{% endblock %}

@@ -1,8 +1,0 @@
-Django>=4.2,<5.1
-wagtail>=6.0,<6.1
-python-dotenv
-pymysql
-cryptography
-requests
-django-cors-headers
-pillow==10.2.0

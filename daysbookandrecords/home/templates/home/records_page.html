@@ -1,0 +1,72 @@
+<!-- records_page.html -->
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block title %}Records - Days Books & Records{% endblock %}
+
+{% block content %}
+<h1>{{ page.title }}</h1>
+
+{% if page.intro %}
+    <div class="story-item">
+        {{ page.intro|richtext }}
+    </div>
+{% endif %}
+
+<div class="search-filter">
+    <form method="get" class="search-form">
+        <div class="form-group">
+            <label for="search">Search Records:</label>
+            <input type="text" id="search" name="search" value="{{ request.GET.search }}" placeholder="Title, artist, or description...">
+        </div>
+        <div class="form-group">
+            <label for="genre">Filter by Genre:</label>
+            <select id="genre" name="genre">
+                <option value="">All Genres</option>
+                {% for genre in genres %}
+                    <option value="{{ genre }}" {% if request.GET.genre == genre %}selected{% endif %}>{{ genre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn">Search</button>
+        </div>
+    </form>
+</div>
+
+<div class="items-grid">
+    {% for record in records %}
+        <div class="item-card">
+            {% if record.image %}
+                <img src="{{ record.image.url }}" alt="{{ record.title }}" class="item-image">
+            {% endif %}
+            <h3 class="item-title">{{ record.title }}</h3>
+            <p class="item-author">by {{ record.artist }}</p>
+            {% if record.label %}
+                <p><strong>Label:</strong> {{ record.label }}</p>
+            {% endif %}
+            <p class="item-price">${{ record.price }}</p>
+            <span class="item-genre">{{ record.genre }}</span>
+            <span class="condition-badge condition-{{ record.condition }}">{{ record.get_condition_display }}</span>
+            {% if record.cat_number %}
+                <p><strong>Cat #:</strong> {{ record.cat_number }}</p>
+            {% endif %}
+            {% if record.sub_genre.all %}
+                <div class="sub-genres">
+                    {% for tag in record.sub_genre.all %}
+                        <span class="sub-genre-tag">{{ tag.name }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if record.description %}
+                <div>{{ record.description|richtext }}</div>
+            {% endif %}
+            {% if record.link %}
+                <a href="{{ record.link }}" target="_blank" class="btn">More Info</a>
+            {% endif %}
+        </div>
+    {% empty %}
+        <p>No records found matching your criteria.</p>
+    {% endfor %}
+</div>
+{% endblock %}
