@@ -45,7 +45,7 @@
             {% if record.label %}
                 <p><strong>Label:</strong> {{ record.label }}</p>
             {% endif %}
-            <p class="item-price">${{ record.price }}</p>
+            <p class="item-price">£{{ record.price }}</p>
             <span class="item-genre">{{ record.genre }}</span>
             <span class="condition-badge condition-{{ record.condition }}">{{ record.get_condition_display }}</span>
             {% if record.cat_number %}

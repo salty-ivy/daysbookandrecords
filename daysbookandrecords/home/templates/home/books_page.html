@@ -45,7 +45,7 @@
             {% if book.publisher %}
                 <p><strong>Publisher:</strong> {{ book.publisher }}</p>
             {% endif %}
-            <p class="item-price">${{ book.price }}</p>
+            <p class="item-price">£{{ book.price }}</p>
             <span class="item-genre">{{ book.genre }}</span>
             <span class="condition-badge condition-{{ book.condition }}">{{ book.get_condition_display }}</span>
             {% if book.isbn %}

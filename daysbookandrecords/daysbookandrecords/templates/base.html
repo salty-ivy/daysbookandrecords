@@ -31,7 +31,7 @@
         header {
             background-color: #FFFFF0;
             /* padding: 20px 0; */
-            border-bottom: 3px solid #4A90E2; /* Blue from logo */
+            border-bottom: 3px solid #2357a2; /* Blue from logo */
         }
 
         .header-content {
@@ -43,8 +43,18 @@
 
         .logo {
             text-decoration: none;
+            margin: 5px 0;
         }
 
+        nav {
+            margin-right: 10px;
+        }
+
+        nav p {
+            margin: 18px 0px;
+            font-size: 12px;
+            text-align: right;
+        }
         nav ul {
             display: flex;
             list-style: none;
@@ -60,7 +70,7 @@
         }
 
         nav a:hover {
-            color: #4A90E2;
+            color: #2357a2;
         }
 
         /* Main content */
@@ -71,7 +81,7 @@
 
         .section-separator {
             height: 3px;
-            background-color: #4A90E2;
+            background-color: #2357a2;
             margin: 40px 0;
             width: 100%;
         }
@@ -98,14 +108,15 @@
 
         .item-image {
             width: 100%;
-            object-fit: cover;
+            height: 450px;
+            object-fit: fill;
             border-radius: 5px;
             margin-bottom: 15px;
         }
 
         .item-title {
             font-size: 1.3em;
-            color: #4A90E2;
+            color: #2357a2;
             margin-bottom: 10px;
         }
 
@@ -124,7 +135,7 @@
 
         .item-genre {
             background-color: #E6F3FF;
-            color: #4A90E2;
+            color: #2357a2;
             padding: 5px 10px;
             border-radius: 15px;
             font-size: 0.9em;
@@ -201,7 +212,7 @@
         }
 
         .btn {
-            background-color: #4A90E2;
+            background-color: #2357a2;
             color: white;
             padding: 10px 20px;
             border: none;
@@ -238,6 +249,24 @@
             margin-top: 40px;
         }
 
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        footer div.container {
+            padding: 20px 20px 35px;
+        }
+
+        .left {
+            float: left;
+        }
+
+        .right {
+            float: right;
+        }
+
+
         /* Responsive */
         @media (max-width: 768px) {
             .header-content {
@@ -265,11 +294,11 @@
             <div class="header-content">
                 <a href="/" class="logo"><img src="{% static 'images/days_logo.png' %}" alt="Logo" width="200"></a>
                 <nav>
+                    <p><a href="mailto:info@daysbooksandrecords.com">info@daysbooksandrecords.com</a></p>
                     <ul>
                         <li><a href="/books/">Books</a></li>
                         <li><a href="/records/">Records</a></li>
                         <li><a href="/about/">About</a></li>
-                        <li><a href="/contact/">Contact</a></li>
                     </ul>
                 </nav>
             </div>
@@ -284,7 +313,12 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 Day's Books and Records. All rights reserved.</p>
+            <div class="left">
+                <p><a href="mailto:info@daysbooksandrecords.com">info@daysbooksandrecords.com</a></p>
+            </div>
+            <div class="right">
+                <p>&copy; 2025 Day's Books and Records. All rights reserved.</p>
+            </div>
         </div>
     </footer>
 </body>
