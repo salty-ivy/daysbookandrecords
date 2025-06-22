@@ -46,6 +46,7 @@ class Book(ClusterableModel):
     isbn = models.CharField(max_length=20, blank=True)
     description = RichTextField(blank=True)
     link = models.URLField(blank=True)
+    featured = models.BooleanField(default=False)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='available')
     added_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='books_added')
     updated_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='books_updated', blank=True, null=True)
@@ -82,6 +83,7 @@ class Record(ClusterableModel):
     cat_number = models.CharField(max_length=50, blank=True, verbose_name="Catalog Number")
     description = RichTextField(blank=True)
     link = models.URLField(blank=True)
+    featured = models.BooleanField(default=False)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='available')
     added_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='records_added')
     updated_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='records_updated', blank=True, null=True)
@@ -105,8 +107,8 @@ class HomePage(Page):
     def get_context(self, request):
         context = super().get_context(request)
         # Get recent books and records for display
-        context['recent_books'] = Book.objects.filter(status='available')[:6]
-        context['recent_records'] = Record.objects.filter(status='available')[:6]
+        context['recent_books'] = Book.objects.filter(featured=1)
+        context['recent_records'] = Record.objects.filter(featured=1)
         return context
 
 class BooksPage(Page):
