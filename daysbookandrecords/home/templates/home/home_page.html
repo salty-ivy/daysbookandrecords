@@ -23,7 +23,9 @@
                     <img src="{{ book.image.url }}" alt="{{ book.title }}" class="item-image">
                 {% endif %}
                 <h3 class="item-title">{{ book.title }}</h3>
+                {% if book.author %}
                 <p class="item-author">by {{ book.author }}</p>
+                {% endif %}
                 <p class="item-price">£{{ book.price }}</p>
                 <span class="item-genre">{{ book.genre }}</span>
                 <span class="condition-badge condition-{{ book.condition }}">{{ book.get_condition_display }}</span>
@@ -54,7 +56,9 @@
                     <img src="{{ record.image.url }}" alt="{{ record.title }}" class="item-image">
                 {% endif %}
                 <h3 class="item-title">{{ record.title }}</h3>
+                {% if record.artist %}
                 <p class="item-author">by {{ record.artist }}</p>
+                {% endif %}
                 <p class="item-price">£{{ record.price }}</p>
                 <span class="item-genre">{{ record.genre }}</span>
                 <span class="condition-badge condition-{{ record.condition }}">{{ record.get_condition_display }}</span>

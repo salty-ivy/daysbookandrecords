@@ -41,7 +41,9 @@
                 <img src="{{ record.image.url }}" alt="{{ record.title }}" class="item-image">
             {% endif %}
             <h3 class="item-title">{{ record.title }}</h3>
+            {% if record.artist %}
             <p class="item-author">by {{ record.artist }}</p>
+            {% endif %}
             {% if record.label %}
                 <p><strong>Label:</strong> {{ record.label }}</p>
             {% endif %}
