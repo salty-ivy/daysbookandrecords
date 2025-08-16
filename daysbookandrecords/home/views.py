@@ -63,8 +63,19 @@ def used_books(request):
     if genre_filter:
         books = books.filter(genre=genre_filter)
     
-    # Get unique genres for sidebar
-    genres = Book.objects.filter(condition='used', status='available').values_list('genre', flat=True).distinct()
+    # Get unique genres for sidebar - filter out empty/null genres and get distinct values
+    raw_genres = Book.objects.filter(
+        condition='used', 
+        status='available',
+        genre__isnull=False
+    ).exclude(genre='').values_list('genre', flat=True)
+    
+    # Convert to set to ensure uniqueness, then back to list and sort
+    genres = sorted(list(set(raw_genres)))
+    
+    # Debug: print genres to see what we're getting
+    print(f"Used Books - Raw genres: {list(raw_genres)}")
+    print(f"Used Books - Unique genres: {genres}")
     
     # Pagination
     paginator = Paginator(books, 18)  # 18 books per page (6 rows of 3)
@@ -97,8 +108,19 @@ def new_books(request):
     if genre_filter:
         books = books.filter(genre=genre_filter)
     
-    # Get unique genres for sidebar
-    genres = Book.objects.filter(condition='new', status='available').values_list('genre', flat=True).distinct()
+    # Get unique genres for sidebar - filter out empty/null genres and get distinct values
+    raw_genres = Book.objects.filter(
+        condition='new', 
+        status='available',
+        genre__isnull=False
+    ).exclude(genre='').values_list('genre', flat=True)
+    
+    # Convert to set to ensure uniqueness, then back to list and sort
+    genres = sorted(list(set(raw_genres)))
+    
+    # Debug: print genres to see what we're getting
+    print(f"New Books - Raw genres: {list(raw_genres)}")
+    print(f"New Books - Unique genres: {genres}")
     
     # Pagination
     paginator = Paginator(books, 18)  # 18 books per page (6 rows of 3)
@@ -140,8 +162,18 @@ def records_view(request):
     if genre_filter:
         records = records.filter(genre=genre_filter)
     
-    # Get unique genres for sidebar
-    genres = Record.objects.filter(status='available').values_list('genre', flat=True).distinct()
+    # Get unique genres for sidebar - filter out empty/null genres and get distinct values
+    raw_genres = Record.objects.filter(
+        status='available',
+        genre__isnull=False
+    ).exclude(genre='').values_list('genre', flat=True)
+    
+    # Convert to set to ensure uniqueness, then back to list and sort
+    genres = sorted(list(set(raw_genres)))
+    
+    # Debug: print genres to see what we're getting
+    print(f"Records - Raw genres: {list(raw_genres)}")
+    print(f"Records - Unique genres: {genres}")
     
     # Pagination
     paginator = Paginator(records, 18)  # 18 records per page (6 rows of 3)
