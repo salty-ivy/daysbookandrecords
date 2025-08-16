@@ -18,6 +18,7 @@ urlpatterns = [
     path("item/", include(home_urls)),  # Changed from root to /item/ to avoid conflicts
     path("used-books/", home_views.used_books, name="used_books"),  # Used books page
     path("new-books/", home_views.new_books, name="new_books"),     # New books page
+    path("records/", home_views.records_view, name="records"),      # Records page
     path("cart/", home_views.cart_view, name="cart"),               # Cart page
 ]
 

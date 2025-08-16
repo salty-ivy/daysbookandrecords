@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404
 from django.core.paginator import Paginator
+from django.db import models
 from .models import Book, Record
 
 def book_detail(request, book_slug):
@@ -66,7 +67,7 @@ def used_books(request):
     genres = Book.objects.filter(condition='used', status='available').values_list('genre', flat=True).distinct()
     
     # Pagination
-    paginator = Paginator(books, 20)  # 20 books per page
+    paginator = Paginator(books, 18)  # 18 books per page (6 rows of 3)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     
@@ -100,7 +101,7 @@ def new_books(request):
     genres = Book.objects.filter(condition='new', status='available').values_list('genre', flat=True).distinct()
     
     # Pagination
-    paginator = Paginator(books, 20)  # 20 books per page
+    paginator = Paginator(books, 18)  # 18 books per page (6 rows of 3)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     
@@ -112,6 +113,50 @@ def new_books(request):
     }
     
     return render(request, 'home/new_books_page.html', context)
+
+def records_view(request):
+    """View for records page"""
+    # Get search and genre filters
+    search_query = request.GET.get('search', '')
+    genre_filter = request.GET.get('genre', '')
+    condition_filter = request.GET.get('condition', '')
+    
+    # Filter records by status
+    records = Record.objects.filter(status='available')
+    
+    # Apply condition filter
+    if condition_filter:
+        records = records.filter(condition=condition_filter)
+    
+    # Apply search filter
+    if search_query:
+        records = records.filter(
+            models.Q(title__icontains=search_query) |
+            models.Q(artist__icontains=search_query) |
+            models.Q(description__icontains=search_query)
+        )
+    
+    # Apply genre filter
+    if genre_filter:
+        records = records.filter(genre=genre_filter)
+    
+    # Get unique genres for sidebar
+    genres = Record.objects.filter(status='available').values_list('genre', flat=True).distinct()
+    
+    # Pagination
+    paginator = Paginator(records, 18)  # 18 records per page (6 rows of 3)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    context = {
+        'records': page_obj,
+        'genres': genres,
+        'search_query': search_query,
+        'genre_filter': genre_filter,
+        'condition_filter': condition_filter,
+    }
+    
+    return render(request, 'home/records_page.html', context)
 
 def cart_view(request):
     """View for cart page"""
