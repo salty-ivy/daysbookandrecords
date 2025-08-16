@@ -653,7 +653,7 @@ p {
 .sidebar {
     flex: 0 0 280px;
     background-color: var(--background-white);
-    padding: 0 20px;
+    padding: 0 20px 0 0;
 }
 
 .sidebar-section {
