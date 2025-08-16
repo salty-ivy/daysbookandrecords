@@ -1,0 +1,79 @@
+<!-- new_books_page.html -->
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block title %}New Books - Days Books & Records{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">New Books</h1>
+            <p class="page-intro">Fresh arrivals and latest releases</p>
+        </div>
+        
+        <div class="page-content">
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <form method="get" class="sidebar-search-form">
+                        <div class="search-input-wrapper">
+                            <input type="text" id="search" name="search" value="{{ request.GET.search }}" placeholder="Search new books..." class="sidebar-search-input">
+                            <button type="submit" class="sidebar-search-btn">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M21 21L16.514 16.506L21 21ZM19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="sidebar-section">
+                    <ul class="filter-list">
+                        <li><a href="?{% if request.GET.search %}search={{ request.GET.search }}{% endif %}" class="filter-link {% if not request.GET.genre %}active{% endif %}">All Genres</a></li>
+                        {% for genre in genres %}
+                            <li><a href="?genre={{ genre }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}" class="filter-link {% if request.GET.genre == genre %}active{% endif %}">{{ genre }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </aside>
+            
+            <main class="main-content">
+                {% if books %}
+                    <div class="books-grid">
+                        {% for book in books %}
+                            <article class="book-card">
+                                <a href="{{ book.get_absolute_url }}" class="book-card-link">
+                                    <div class="book-cover-wrapper">
+                                        {% if book.image %}
+                                            <img src="{{ book.image.url }}" alt="{{ book.title }}" class="book-cover">
+                                        {% else %}
+                                            <div class="book-cover-placeholder">
+                                                <span class="placeholder-text">{{ book.title|truncatechars:25 }}</span>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="book-details">
+                                        <h3 class="book-title">{{ book.title }}</h3>
+                                        {% if book.author %}
+                                            <p class="book-author">{{ book.author }}</p>
+                                        {% endif %}
+                                        <p class="book-price">
+                                            £{{ book.price }}
+                                            <span class="book-condition condition-{{ book.condition }}">{{ book.get_condition_display }}</span>
+                                        </p>
+                                    </div>
+                                </a>
+                            </article>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="no-results">
+                        <p>No new books found matching your criteria.</p>
+                        <a href="/" class="btn btn-outline">Back to Home</a>
+                    </div>
+                {% endif %}
+            </main>
+        </div>
+    </div>
+</div>
+{% endblock %}

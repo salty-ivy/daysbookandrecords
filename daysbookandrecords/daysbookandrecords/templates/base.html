@@ -6,8 +6,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Days Books & Records{% endblock %}</title>
-    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="{% static 'images/favicon.svg' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon-16x16.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/apple-touch-icon.png' %}">
+    <link rel="manifest" href="{% static 'images/site.webmanifest' %}">
+
+    <!-- Fallback favicon using data URI -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%232c3e50'/><rect x='8' y='10' width='16' height='12' rx='2' fill='%23ecf0f1'/><rect x='9' y='11' width='14' height='10' rx='1' fill='%233498db'/><line x1='12' y1='13' x2='20' y2='13' stroke='%232c3e50' stroke-width='0.5'/><line x1='12' y1='15' x2='20' y2='15' stroke='%232c3e50' stroke-width='0.5'/><line x1='12' y1='17' x2='20' y2='17' stroke='%232c3e50' stroke-width='0.5'/><line x1='12' y1='19' x2='18' y2='19' stroke='%232c3e50' stroke-width='0.5'/><text x='16' y='26' font-family='Arial, sans-serif' font-size='8' font-weight='bold' text-anchor='middle' fill='%23ecf0f1'>D</text></svg>">
+    <link rel="stylesheet" href="{% static 'css/daysbookandrecords.css' %}">
+
     <style>
+        /* Base template styles - minimal and clean */
         * {
             margin: 0;
             padding: 0;
@@ -15,10 +28,10 @@
         }
 
         body {
-            background-color: #FFFFF0; /* Ivory background */
-            font-family: 'Special Elite', cursive;
+            background-color: #ffffff;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: #2c3e50;
         }
 
         .container {
@@ -29,223 +42,563 @@
 
         /* Header */
         header {
-            background-color: #FFFFF0;
-            /* padding: 20px 0;
-            border-bottom: 3px solid #2357a2; */
+            background-color: #ffffff;
+            padding: 20px 0;
+            text-align: center;
         }
 
         .header-content {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
-            flex-wrap: wrap;
         }
 
         .logo {
             text-decoration: none;
-            margin: 10px 0 0;
+            margin: 0;
         }
 
         nav {
-            margin-right: 10px;
+            margin: 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: #ffffff;
+            padding: 15px 0;
+            transition: all 0.3s ease;
         }
 
-        nav p {
-            margin: 18px 0px;
-            font-size: 12px;
-            text-align: right;
+        /* Sticky navigation behavior */
+        nav.sticky {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
         }
+
+
+
         nav ul {
             display: flex;
             list-style: none;
-            gap: 30px;
+            gap: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
         nav a {
-            color: #333;
+            color: #2c3e50;
             text-decoration: none;
-            font-size: 1.2em;
-            font-weight: bold;
+            font-size: 1.1em;
+            font-weight: 500;
             transition: color 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         nav a:hover {
-            color: #2357a2;
+            color: #e74c3c;
+        }
+
+        /* Cart Menu Styles */
+        .cart-menu {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cart-badge {
+            background-color: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            min-width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+
+        .cart-menu:hover .cart-badge {
+            background-color: #c0392b;
+        }
+
+        /* Cart Message Styles */
+        .cart-message {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background-color: #27ae60;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 10000;
+            font-weight: 500;
+            animation: slideInRight 0.3s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Cart Page Styles */
+        .cart-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            border: 1px solid #ecf0f1;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-item-image {
+            flex: 0 0 80px;
+        }
+
+        .cart-item-cover {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .cart-item-placeholder {
+            width: 80px;
+            height: 80px;
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #6c757d;
+        }
+
+        .cart-item-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .cart-item-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0 0 8px 0;
+            color: #2c3e50;
+        }
+
+        .cart-item-creator {
+            margin: 0 0 4px 0;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .cart-item-condition {
+            margin: 0 0 8px 0;
+            color: #27ae60;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .cart-item-price {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #e74c3c;
+        }
+
+        .cart-item-quantity {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            min-width: 80px;
+        }
+
+        .cart-item-quantity label {
+            font-size: 0.8rem;
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        .cart-item-quantity select {
+            padding: 6px 12px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .cart-item-total {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c3e50;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .cart-item-actions {
+            min-width: 80px;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+        }
+
+        .cart-summary {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 30px;
+            border: 1px solid #dee2e6;
+        }
+
+        .cart-summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .cart-summary-label {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .cart-summary-value {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .cart-total-price {
+            font-size: 1.3rem;
+            color: #e74c3c;
+        }
+
+        .cart-summary-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            justify-content: center;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-cart-content h2 {
+            color: #6c757d;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+
+        .empty-cart-content p {
+            color: #6c757d;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .empty-cart-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Responsive Cart */
+        @media (max-width: 768px) {
+            .cart-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .cart-item-image {
+                flex: none;
+            }
+
+            .cart-item-quantity {
+                flex-direction: row;
+                gap: 10px;
+            }
+
+            .cart-summary-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .empty-cart-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* GDPR Cookie Consent Styles */
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 20px 0;
+            z-index: 10000;
+            transform: translateY(100%);
+            transition: transform 0.3s ease-out;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .cookie-banner.show {
+            transform: translateY(0);
+        }
+
+        .cookie-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .cookie-text {
+            flex: 1;
+        }
+
+        .cookie-text h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #ecf0f1;
+        }
+
+        .cookie-text p {
+            margin: 0 0 15px 0;
+            line-height: 1.5;
+            color: #bdc3c7;
+            font-size: 0.95rem;
+        }
+
+        .cookie-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .cookie-link {
+            color: #3498db;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .cookie-link:hover {
+            color: #5dade2;
+            text-decoration: underline;
+        }
+
+        .cookie-actions {
+            display: flex;
+            gap: 15px;
+            flex-shrink: 0;
+        }
+
+        .cookie-actions .btn {
+            min-width: 120px;
+        }
+
+        /* Cookie Modal Styles */
+        .cookie-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10001;
+            padding: 20px;
+        }
+
+        .cookie-modal-content {
+            background: white;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .cookie-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 30px 20px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .cookie-modal-header h2 {
+            margin: 0;
+            color: #2c3e50;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .cookie-modal-close {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: #95a5a6;
+            cursor: pointer;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+
+        .cookie-modal-close:hover {
+            background: #f8f9fa;
+            color: #2c3e50;
+        }
+
+        .cookie-modal-body {
+            padding: 25px 30px;
+        }
+
+        .cookie-modal-body h3 {
+            color: #2c3e50;
+            margin: 25px 0 15px 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .cookie-modal-body h3:first-child {
+            margin-top: 0;
+        }
+
+        .cookie-modal-body p {
+            color: #34495e;
+            line-height: 1.6;
+            margin: 0 0 15px 0;
+        }
+
+        .cookie-modal-body ul {
+            color: #34495e;
+            line-height: 1.6;
+            margin: 0 0 15px 0;
+            padding-left: 20px;
+        }
+
+        .cookie-modal-body li {
+            margin-bottom: 8px;
+        }
+
+        .cookie-modal-footer {
+            padding: 20px 30px 25px;
+            border-top: 1px solid #ecf0f1;
+            text-align: center;
+        }
+
+        /* Cookie Message Styles */
+        .cookie-message {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: #27ae60;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 10002;
+            font-weight: 500;
+            animation: slideInRight 0.3s ease-out;
+        }
+
+        /* Responsive Cookie Banner */
+        @media (max-width: 768px) {
+            .cookie-content {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .cookie-actions {
+                justify-content: center;
+            }
+
+            .cookie-actions .btn {
+                min-width: 100px;
+            }
+
+            .cookie-links {
+                justify-content: center;
+            }
+
+            .cookie-modal-content {
+                margin: 20px;
+                max-height: 90vh;
+            }
+
+            .cookie-modal-header,
+            .cookie-modal-body,
+            .cookie-modal-footer {
+                padding: 20px;
+            }
         }
 
         /* Main content */
         main {
             min-height: calc(100vh - 200px);
-            padding: 40px 0;
+            padding: 0;
         }
 
         .content {
-            margin: 20px 0;
-        }
-
-        .section-separator {
-            height: 0px;
-            background-color: #2357a2;
-            margin: 40px 0;
-            width: 100%;
-        }
-
-        /* Grid layouts */
-        .items-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-            margin: 20px 0;
-        }
-
-        .item-card {
-            background: #FFFFF0;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
-
-        .item-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .item-image {
-            width: 100%;
-            height: 450px;
-            object-fit: fill;
-            border-radius: 5px;
-            margin-bottom: 15px;
-        }
-
-        .item-title {
-            font-size: 1.3em;
-            color: #2357a2;
-            margin-bottom: 10px;
-        }
-
-        .item-author {
-            font-size: 1.1em;
-            color: #666;
-            margin-bottom: 10px;
-        }
-
-        .item-price {
-            font-size: 1.4em;
-            font-weight: bold;
-            color: #2E8B57;
-            margin-bottom: 10px;
-        }
-
-        .item-genre {
-            background-color: #E6F3FF;
-            color: #2357a2;
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 0.9em;
-            display: inline-block;
-            margin-bottom: 10px;
-        }
-
-        .sub-genres {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-bottom: 10px;
-        }
-
-        .sub-genre-tag {
-            background-color: #F0F0F0;
-            color: #666;
-            padding: 3px 8px;
-            border-radius: 10px;
-            font-size: 0.8em;
-        }
-
-        .condition-badge {
-            padding: 3px 8px;
-            border-radius: 10px;
-            font-size: 0.8em;
-            font-weight: bold;
-        }
-
-        .condition-new {
-            background-color: #D4F5D4;
-            color: #2E8B57;
-        }
-
-        .condition-used {
-            background-color: #FFE4B5;
-            color: #FF8C00;
-        }
-
-        /* Search and filter */
-        .search-filter {
-            padding: 20px 0;
-            /* border-radius: 10px;
-            margin-bottom: 30px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1); */
-        }
-
-        .search-form {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            align-items: end;
-        }
-
-        .form-group {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            font-family: 'Special Elite', cursive;
-        }
-
-        .btn {
-            background-color: #2357a2;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-family: 'Special Elite', cursive;
-            font-size: 1em;
-            transition: background-color 0.3s;
-        }
-
-        .btn:hover {
-            background-color: #357ABD;
-        }
-
-        /* Story-style layout for home page */
-        .story-item {
-            background: #FFFFF0;
-            padding: 30px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .story-item:last-child {
-            margin-bottom: 0;
+            margin: 0;
         }
 
         /* Footer */
         footer {
-            background-color: #2357a2;
+            background-color: #2c3e50;
             color: white;
             text-align: center;
             padding: 20px 0;
@@ -270,6 +623,7 @@
         }
 
 
+
         /* Responsive */
         @media (max-width: 768px) {
             .header-content {
@@ -280,31 +634,26 @@
             nav ul {
                 gap: 15px;
             }
-
-            .search-form {
-                flex-direction: column;
-            }
-
-            .items-grid {
-                grid-template-columns: 1fr;
-            }
         }
     </style>
 </head>
 <body>
     <header>
         <div class="container">
-            <div class="header-content">
-                <a href="/" class="logo"><img src="{% static 'images/days_logo.png' %}" alt="Logo" height="75"></a>
-                <nav>
-                    <p><a href="mailto:info@daysbooksandrecords.com">info@daysbooksandrecords.com</a></p>
-                    <ul>
-                        <li><a href="/books/">Books</a></li>
-                        <li><a href="/records/">Records</a></li>
-                        <li><a href="/about/">About</a></li>
-                    </ul>
-                </nav>
-            </div>
+                    <div class="header-content">
+            <a href="/" class="logo"><img src="{% static 'images/days_logo.png' %}" alt="Logo" height="75"></a>
+            <nav>
+                        <ul>
+                           <li><a href="/used-books/">Used Books</a></li>
+                           <li><a href="/new-books/">New Books</a></li>
+                           <li><a href="/records/">Records</a></li>
+                           <li><a href="/about/">About</a></li>
+                           <li><a href="/cart/" id="cart-menu" class="cart-menu">
+                               Cart <span id="cart-badge" class="cart-badge">0</span>
+                           </a></li>
+                       </ul>
+            </nav>
+        </div>
         </div>
     </header>
 
@@ -324,6 +673,283 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // Carousel functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const carousels = document.querySelectorAll('.carousel-container');
+
+            carousels.forEach(carousel => {
+                const track = carousel.querySelector('.carousel-track');
+                const prevBtn = carousel.querySelector('.carousel-btn-prev');
+                const nextBtn = carousel.querySelector('.carousel-btn-next');
+                const items = carousel.querySelectorAll('.carousel-item');
+
+                if (!track || !prevBtn || !nextBtn || items.length === 0) return;
+
+                let currentIndex = 0;
+                const itemWidth = 280 + 30; // item width + gap
+                const maxIndex = Math.max(0, items.length - 0);
+
+                // Calculate item width based on content type
+                function getItemWidth() {
+                    const firstItem = items[0];
+                    if (firstItem.classList.contains('book-cover')) {
+                        return 200 + 30; // book cover width + gap
+                    } else if (firstItem.classList.contains('record-cover')) {
+                        return 250 + 30; // record cover width + gap
+                    }
+                    return 280 + 30; // default width + gap
+                }
+
+                // Show/hide navigation buttons based on content
+                function updateNavigation() {
+                    if (items.length <= 1) {
+                        prevBtn.style.display = 'none';
+                        nextBtn.style.display = 'none';
+                        return;
+                    }
+
+                    prevBtn.style.display = currentIndex === 0 ? 'none' : 'flex';
+                    nextBtn.style.display = currentIndex >= maxIndex ? 'none' : 'flex';
+                }
+
+                // Update carousel position
+                function updateCarousel() {
+                    const currentItemWidth = getItemWidth();
+                    track.style.transform = `translateX(-${currentIndex * currentItemWidth}px)`;
+                    updateNavigation();
+                }
+
+                // Event listeners
+                prevBtn.addEventListener('click', () => {
+                    if (currentIndex > 0) {
+                        currentIndex--;
+                        updateCarousel();
+                    }
+                });
+
+                nextBtn.addEventListener('click', () => {
+                    if (currentIndex < maxIndex) {
+                        currentIndex++;
+                        updateCarousel();
+                    }
+                });
+
+                // Initialize
+                updateNavigation();
+
+                // Auto-hide navigation if only one item
+                if (items.length <= 1) {
+                    prevBtn.style.display = 'none';
+                    nextBtn.style.display = 'none';
+                }
+            });
+        });
+
+        // Sticky Navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const nav = document.querySelector('nav');
+            const header = document.querySelector('header');
+
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+                // Make navigation sticky when scrolling down
+                if (scrollTop > 100) {
+                    nav.classList.add('sticky');
+                } else {
+                    nav.classList.remove('sticky');
+                }
+            });
+        });
+
+        // Cart functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const cartBadge = document.getElementById('cart-badge');
+            const cartMenu = document.getElementById('cart-menu');
+
+            // Initialize cart from localStorage
+            function initCart() {
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                updateCartBadge(cart.length);
+            }
+
+            // Update cart badge count
+            function updateCartBadge(count) {
+                if (cartBadge) {
+                    cartBadge.textContent = count;
+                    cartBadge.style.display = count > 0 ? 'flex' : 'none';
+                }
+            }
+
+            // Add item to cart
+            window.addToCart = function(item) {
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+                // Check if item already exists in cart
+                const existingItem = cart.find(cartItem =>
+                    cartItem.id === item.id && cartItem.type === item.type
+                );
+
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        ...item,
+                        quantity: 1,
+                        addedAt: new Date().toISOString()
+                    });
+                }
+
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartBadge(cart.length);
+
+                // Show success message
+                showCartMessage('Item added to cart!');
+            }
+
+            // Show cart message
+            function showCartMessage(message) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'cart-message';
+                messageDiv.textContent = message;
+                document.body.appendChild(messageDiv);
+
+                setTimeout(() => {
+                    messageDiv.remove();
+                }, 3000);
+            }
+
+            // Initialize cart on page load
+            initCart();
+        });
+
+        // GDPR Cookie Consent functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const cookieBanner = document.getElementById('cookie-banner');
+            const cookieModal = document.getElementById('cookie-modal');
+
+            // Check if user has already made a cookie choice
+            const cookieChoice = localStorage.getItem('cookieChoice');
+
+            if (!cookieChoice) {
+                // Show banner after a short delay for better UX
+                setTimeout(() => {
+                    cookieBanner.style.display = 'block';
+                    cookieBanner.classList.add('show');
+                }, 1000);
+            }
+
+            // Accept all cookies
+            window.acceptAllCookies = function() {
+                localStorage.setItem('cookieChoice', 'all');
+                localStorage.setItem('cookieConsent', 'true');
+                hideCookieBanner();
+                showCookieMessage('All cookies accepted');
+            };
+
+            // Accept essential cookies only
+            window.acceptEssentialCookies = function() {
+                localStorage.setItem('cookieChoice', 'essential');
+                localStorage.setItem('cookieConsent', 'true');
+                hideCookieBanner();
+                showCookieMessage('Essential cookies accepted');
+            };
+
+            // Show cookie policy modal
+            window.showCookiePolicy = function() {
+                cookieModal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            };
+
+            // Show privacy policy (placeholder)
+            window.showPrivacyPolicy = function() {
+                alert('Privacy Policy page would be implemented here.');
+            };
+
+            // Close cookie modal
+            window.closeCookieModal = function() {
+                cookieModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            };
+
+            // Hide cookie banner
+            function hideCookieBanner() {
+                cookieBanner.classList.remove('show');
+                setTimeout(() => {
+                    cookieBanner.style.display = 'none';
+                }, 300);
+            }
+
+            // Show cookie message
+            function showCookieMessage(message) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'cookie-message';
+                messageDiv.textContent = message;
+                document.body.appendChild(messageDiv);
+
+                setTimeout(() => {
+                    messageDiv.remove();
+                }, 3000);
+            }
+
+            // Close modal when clicking outside
+            cookieModal.addEventListener('click', function(e) {
+                if (e.target === cookieModal) {
+                    closeCookieModal();
+                }
+            });
+        });
+    </script>
+
+    <!-- GDPR Cookie Consent Banner -->
+    <div id="cookie-banner" class="cookie-banner" style="display: none;">
+        <div class="cookie-content">
+            <div class="cookie-text">
+                <h3>🍪 We use cookies</h3>
+                <p>We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic. By clicking "Accept All", you consent to our use of cookies.</p>
+                <div class="cookie-links">
+                    <a href="#" class="cookie-link" onclick="showCookiePolicy()">Cookie Policy</a>
+                    <a href="#" class="cookie-link" onclick="showPrivacyPolicy()">Privacy Policy</a>
+                </div>
+            </div>
+            <div class="cookie-actions">
+                <button class="btn btn-essential btn-small" onclick="acceptEssentialCookies()">Essential Only</button>
+                <button class="btn btn-primary btn-small" onclick="acceptAllCookies()">Accept All</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cookie Policy Modal -->
+    <div id="cookie-modal" class="cookie-modal" style="display: none;">
+        <div class="cookie-modal-content">
+            <div class="cookie-modal-header">
+                <h2>Cookie Policy</h2>
+                <button class="cookie-modal-close" onclick="closeCookieModal()">&times;</button>
+            </div>
+            <div class="cookie-modal-body">
+                <h3>What are cookies?</h3>
+                <p>Cookies are small text files that are stored on your device when you visit our website. They help us provide you with a better experience and understand how you use our site.</p>
+
+                <h3>Types of cookies we use:</h3>
+                <ul>
+                    <li><strong>Essential Cookies:</strong> Required for basic website functionality (shopping cart, navigation)</li>
+                    <li><strong>Analytics Cookies:</strong> Help us understand how visitors interact with our website</li>
+                    <li><strong>Preference Cookies:</strong> Remember your choices and preferences</li>
+                </ul>
+
+                <h3>How to manage cookies:</h3>
+                <p>You can control and manage cookies through your browser settings. However, disabling certain cookies may affect the functionality of our website.</p>
+
+                <h3>Third-party cookies:</h3>
+                <p>We may use third-party services that set their own cookies. These services help us provide better functionality and analyze website usage.</p>
+            </div>
+            <div class="cookie-modal-footer">
+                <button class="btn btn-primary" onclick="closeCookieModal()">Got it</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
 

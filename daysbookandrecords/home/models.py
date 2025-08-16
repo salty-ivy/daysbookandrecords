@@ -52,6 +52,17 @@ class Book(ClusterableModel):
     updated_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='books_updated', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+    def get_slug(self):
+        """Generate a URL-friendly slug from the book title"""
+        import re
+        slug = re.sub(r'[^\w\s-]', '', self.title.lower())
+        slug = re.sub(r'[-\s]+', '-', slug)
+        return slug.strip('-')
+    
+    def get_absolute_url(self):
+        """Get the absolute URL for the book detail page"""
+        return f'/item/books/{self.get_slug()}/'
 
     def __str__(self):
         return f"{self.title} by {self.author}"
@@ -89,6 +100,17 @@ class Record(ClusterableModel):
     updated_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='records_updated', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+    def get_slug(self):
+        """Generate a URL-friendly slug from the record title"""
+        import re
+        slug = re.sub(r'[^\w\s-]', '', self.title.lower())
+        slug = re.sub(r'[-\s]+', '-', slug)
+        return slug.strip('-')
+    
+    def get_absolute_url(self):
+        """Get the absolute URL for the record detail page"""
+        return f'/item/records/{self.get_slug()}/'
 
     def __str__(self):
         return f"{self.title} by {self.artist}"
@@ -106,8 +128,9 @@ class HomePage(Page):
 
     def get_context(self, request):
         context = super().get_context(request)
-        # Get recent books and records for display
-        context['recent_books'] = Book.objects.filter(featured=1)
+        # Get recent used books and new books for display
+        context['recent_used_books'] = Book.objects.filter(featured=1, condition='used')[:6]
+        context['recent_new_books'] = Book.objects.filter(featured=1, condition='new')[:6]
         context['recent_records'] = Record.objects.filter(featured=1)
         return context
 

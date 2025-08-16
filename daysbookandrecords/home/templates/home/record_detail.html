@@ -1,0 +1,110 @@
+<!-- record_detail.html -->
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block title %}{{ record.title }} by {{ record.artist }} - Days Books & Records{% endblock %}
+
+{% block content %}
+<div class="record-detail-container">
+    <div class="container">
+        <div class="record-detail-content">
+            <!-- Record Cover Section -->
+            <div class="record-cover-section">
+                {% if record.image %}
+                    <img src="{{ record.image.url }}" alt="{{ record.title }}" class="record-detail-cover">
+                {% else %}
+                    <div class="record-detail-cover-placeholder">
+                        <span class="placeholder-text">{{ record.title|truncatechars:30 }}</span>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Record Information Section -->
+            <div class="record-info-section">
+                <div class="record-header">
+                    <h1 class="record-detail-title">{{ record.title }}</h1>
+                    <p class="record-detail-artist">{{ record.artist }}</p>
+                    <p class="record-detail-price">£{{ record.price }}</p>
+                </div>
+
+                <div class="record-meta">
+                    <div class="meta-item">
+                        <span class="meta-label">Condition:</span>
+                        <span class="record-condition condition-{{ record.condition }}">{{ record.get_condition_display }}</span>
+                    </div>
+                    {% if record.genre %}
+                        <div class="meta-item">
+                            <span class="meta-label">Genre:</span>
+                            <span class="meta-value">{{ record.genre }}</span>
+                        </div>
+                    {% endif %}
+                    {% if record.label %}
+                        <div class="meta-item">
+                            <span class="meta-label">Label:</span>
+                            <span class="meta-value">{{ record.label }}</span>
+                        </div>
+                    {% endif %}
+                    {% if record.cat_number %}
+                        <div class="meta-item">
+                            <span class="meta-label">Catalog #:</span>
+                            <span class="meta-value">{{ record.cat_number }}</span>
+                        </div>
+                    {% endif %}
+                </div>
+
+                {% if record.description %}
+                    <div class="record-description">
+                        <h3>Description</h3>
+                        <div class="description-content">
+                            {{ record.description|richtext }}
+                        </div>
+                    </div>
+                {% endif %}
+
+                                       <div class="record-actions">
+                           <button class="btn btn-primary btn-large" onclick="addRecordToCart()">Add to Cart</button>
+                           <button class="btn btn-outline btn-large">Add to Wishlist</button>
+                       </div>
+
+                {% if record.sub_genre.all %}
+                    <div class="record-tags">
+                        <h4>Tags</h4>
+                        <div class="tags-list">
+                            {% for tag in record.sub_genre.all %}
+                                <span class="tag">{{ tag.name }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Related Records Section -->
+        <div class="related-records-section">
+            <h3>Records you might also like</h3>
+            <div class="related-records-grid">
+                <!-- This would be populated with related records based on genre/artist -->
+                <div class="related-record-placeholder">
+                    <p>Related records will appear here</p>
+                </div>
+            </div>
+               </div>
+   </div>
+</div>
+
+<script>
+    function addRecordToCart() {
+        const recordData = {
+            id: '{{ record.id }}',
+            type: 'record',
+            title: '{{ record.title }}',
+            artist: '{{ record.artist }}',
+            price: {{ record.price }},
+            image: '{{ record.image.url }}' || null,
+            condition: '{{ record.get_condition_display }}'
+        };
+        
+        addToCart(recordData);
+    }
+</script>
+{% endblock %}

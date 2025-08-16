@@ -5,75 +5,173 @@
 {% block title %}Home - Days Books & Records{% endblock %}
 
 {% block content %}
-<div>
-    {% if page.intro %}
-        {{ page.intro|richtext }}
-    {% endif %}
-</div>
-
-<div class="section-separator"></div>
-
-<div class="story-item">
-    <h2>Featured Books</h2>
-    <div class="items-grid">
-        {% for book in recent_books %}
-            <div class="item-card">
-                {% if book.image %}
-                    <img src="{{ book.image.url }}" alt="{{ book.title }}" class="item-image">
-                {% endif %}
-                <h3 class="item-title">{{ book.title }}</h3>
-                {% if book.author %}
-                <p class="item-author">by {{ book.author }}</p>
-                {% endif %}
-                <p class="item-price">£{{ book.price }}</p>
-                <span class="item-genre">{{ book.genre }}</span>
-                <span class="condition-badge condition-{{ book.condition }}">{{ book.get_condition_display }}</span>
-                {% if book.sub_genre.all %}
-                    <div class="sub-genres">
-                        {% for tag in book.sub_genre.all %}
-                            <span class="sub-genre-tag">{{ tag.name }}</span>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-                {% if book.description %}
-                    <p>{{ book.description|richtext|truncatewords:20 }}</p>
-                {% endif %}
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="hero-content">
+        {% if page.intro %}
+        <div class="intro-section">
+            <div class="container-narrow">
+                {{ page.intro|richtext }}
             </div>
-        {% endfor %}
+        </div>
+        {% endif %}
+        <p class="hero-subtitle">Curated collections of rare books and vinyl records for discerning collectors</p>
+        <div class="hero-buttons">
+            <a href="/used-books/" class="btn btn-primary">Browse Used Books</a>
+            <a href="/new-books/" class="btn btn-secondary">Browse New Books</a>
+            <a href="/records/" class="btn btn-tertiary">Browse Records</a>
+        </div>
     </div>
-    <a href="/books/" class="btn">View All Books</a>
 </div>
 
-<div class="section-separator"></div>
+<!-- Featured Used Books Section -->
+<section class="featured-section">
+    <div class="section-header">
+        <h2 class="section-title">Featured Used Books</h2>
+        <p class="section-subtitle">Discover our latest arrivals and rare finds</p>
+    </div>
 
-<div class="story-item">
-    <h2>Featured Records</h2>
-    <div class="items-grid">
-        {% for record in recent_records %}
-            <div class="item-card">
-                {% if record.image %}
-                    <img src="{{ record.image.url }}" alt="{{ record.title }}" class="item-image">
-                {% endif %}
-                <h3 class="item-title">{{ record.title }}</h3>
-                {% if record.artist %}
-                <p class="item-author">by {{ record.artist }}</p>
-                {% endif %}
-                <p class="item-price">£{{ record.price }}</p>
-                <span class="item-genre">{{ record.genre }}</span>
-                <span class="condition-badge condition-{{ record.condition }}">{{ record.get_condition_display }}</span>
-                {% if record.sub_genre.all %}
-                    <div class="sub-genres">
-                        {% for tag in record.sub_genre.all %}
-                            <span class="sub-genre-tag">{{ tag.name }}</span>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-                {% if record.description %}
-                    <p>{{ record.description|richtext|truncatewords:20 }}</p>
-                {% endif %}
+    <div class="carousel-container">
+        <div class="carousel-wrapper">
+            <div class="carousel-track">
+                {% for book in recent_used_books %}
+                    <article class="carousel-item book-cover">
+                        <a href="{{ book.get_absolute_url }}" class="carousel-item-link">
+                            <div class="cover-image-container">
+                                {% if book.image %}
+                                    <img src="{{ book.image.url }}" alt="{{ book.title }}" class="cover-image">
+                                {% else %}
+                                    <div class="placeholder-cover book-placeholder">
+                                        <span class="placeholder-text">{{ book.title|truncatechars:20 }}</span>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </a>
+                    </article>
+                {% endfor %}
             </div>
-        {% endfor %}
+        </div>
+
+        <button class="carousel-btn carousel-btn-prev" aria-label="Previous">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+        <button class="carousel-btn carousel-btn-next" aria-label="Next">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
     </div>
-    <a href="/records/" class="btn">View All Records</a>
-</div>
+
+    <div class="section-footer">
+        <a href="/used-books/" class="btn btn-outline">See more used books...</a>
+    </div>
+</section>
+
+<!-- Featured New Books Section -->
+<section class="featured-section">
+    <div class="section-header">
+        <h2 class="section-title">Featured New Books</h2>
+        <p class="section-subtitle">Fresh arrivals and latest releases</p>
+    </div>
+
+    <div class="carousel-container">
+        <div class="carousel-wrapper">
+            <div class="carousel-track">
+                {% for book in recent_new_books %}
+                    <article class="carousel-item book-cover">
+                        <a href="{{ book.get_absolute_url }}" class="carousel-item-link">
+                            <div class="cover-image-container">
+                                {% if book.image %}
+                                    <img src="{{ book.image.url }}" alt="{{ book.title }}" class="cover-image">
+                                {% else %}
+                                    <div class="placeholder-cover book-placeholder">
+                                        <span class="placeholder-text">{{ book.title|truncatechars:20 }}</span>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </a>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
+
+        <button class="carousel-btn carousel-btn-prev" aria-label="Previous">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+        <button class="carousel-btn carousel-btn-next" aria-label="Next">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+    </div>
+
+    <div class="section-footer">
+        <a href="/new-books/" class="btn btn-outline">See more new books...</a>
+    </div>
+</section>
+
+<!-- Featured Records Section -->
+<section class="featured-section">
+    <div class="section-header">
+        <h2 class="section-title">Featured Records</h2>
+        <p class="section-subtitle">Vinyl treasures from classic to contemporary</p>
+    </div>
+
+    <div class="carousel-container">
+        <div class="carousel-wrapper">
+            <div class="carousel-track">
+                {% for record in recent_records %}
+                    <article class="carousel-item record-cover">
+                        <a href="{{ record.get_absolute_url }}" class="carousel-item-link">
+                            <div class="cover-image-container">
+                                {% if record.image %}
+                                    <img src="{{ record.image.url }}" alt="{{ record.title }}" class="cover-image">
+                                {% else %}
+                                    <div class="placeholder-cover record-placeholder">
+                                        <span class="placeholder-text">{{ record.title|truncatechars:20 }}</span>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </a>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
+
+        <button class="carousel-btn carousel-btn-prev" aria-label="Previous">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+        <button class="carousel-btn carousel-btn-next" aria-label="Next">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+    </div>
+
+    <div class="section-footer">
+        <a href="/records/" class="btn btn-outline">See more records...</a>
+    </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="newsletter-section">
+    <div class="container-narrow">
+        <div class="newsletter-content">
+            <h2 class="newsletter-title">Stay Updated</h2>
+            <p class="newsletter-subtitle">Get the latest news about new arrivals, rare finds, and special offers</p>
+            <form class="newsletter-form">
+                <div class="form-group">
+                    <input type="email" placeholder="Enter your email address" class="newsletter-input" required>
+                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
 {% endblock %}

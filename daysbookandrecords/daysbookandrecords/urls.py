@@ -7,12 +7,18 @@ from wagtail import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
 
 from search import views as search_views
+from home import urls as home_urls
+from home import views as home_views
 
 urlpatterns = [
     path("django-admin/", admin.site.urls),
     path("admin/", include(wagtailadmin_urls)),
     path("documents/", include(wagtaildocs_urls)),
     path("search/", search_views.search, name="search"),
+    path("item/", include(home_urls)),  # Changed from root to /item/ to avoid conflicts
+    path("used-books/", home_views.used_books, name="used_books"),  # Used books page
+    path("new-books/", home_views.new_books, name="new_books"),     # New books page
+    path("cart/", home_views.cart_view, name="cart"),               # Cart page
 ]
 
 
@@ -25,6 +31,8 @@ if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns = urlpatterns + [
+
+    
     # For anything not caught by a more specific rule above, hand over to
     # Wagtail's page serving mechanism. This should be the last pattern in
     # the list:

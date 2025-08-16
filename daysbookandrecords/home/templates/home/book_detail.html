@@ -1,0 +1,110 @@
+<!-- book_detail.html -->
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block title %}{{ book.title }} by {{ book.author }} - Days Books & Records{% endblock %}
+
+{% block content %}
+<div class="book-detail-container">
+    <div class="container">
+        <div class="book-detail-content">
+            <!-- Book Cover Section -->
+            <div class="book-cover-section">
+                {% if book.image %}
+                    <img src="{{ book.image.url }}" alt="{{ book.title }}" class="book-detail-cover">
+                {% else %}
+                    <div class="book-detail-cover-placeholder">
+                        <span class="placeholder-text">{{ book.title|truncatechars:30 }}</span>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Book Information Section -->
+            <div class="book-info-section">
+                <div class="book-header">
+                    <h1 class="book-detail-title">{{ book.title }}</h1>
+                    <p class="book-detail-author">{{ book.author }}</p>
+                    <p class="book-detail-price">£{{ book.price }}</p>
+                </div>
+
+                <div class="book-meta">
+                    <div class="meta-item">
+                        <span class="meta-label">Condition:</span>
+                        <span class="book-condition condition-{{ book.condition }}">{{ book.get_condition_display }}</span>
+                    </div>
+                    {% if book.genre %}
+                        <div class="meta-item">
+                            <span class="meta-label">Genre:</span>
+                            <span class="meta-value">{{ book.genre }}</span>
+                        </div>
+                    {% endif %}
+                    {% if book.publisher %}
+                        <div class="meta-item">
+                            <span class="meta-label">Publisher:</span>
+                            <span class="meta-value">{{ book.publisher }}</span>
+                        </div>
+                    {% endif %}
+                    {% if book.isbn %}
+                        <div class="meta-item">
+                            <span class="meta-label">ISBN:</span>
+                            <span class="meta-value">{{ book.isbn }}</span>
+                        </div>
+                    {% endif %}
+                </div>
+
+                {% if book.description %}
+                    <div class="book-description">
+                        <h3>Description</h3>
+                        <div class="description-content">
+                            {{ book.description|richtext }}
+                        </div>
+                    </div>
+                {% endif %}
+
+                                       <div class="book-actions">
+                           <button class="btn btn-primary btn-large" onclick="addBookToCart()">Add to Cart</button>
+                           <button class="btn btn-outline btn-large">Add to Wishlist</button>
+                       </div>
+
+                {% if book.sub_genre.all %}
+                    <div class="book-tags">
+                        <h4>Tags</h4>
+                        <div class="tags-list">
+                            {% for tag in book.sub_genre.all %}
+                                <span class="tag">{{ tag.name }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Related Books Section -->
+        <div class="related-books-section">
+            <h3>Books you might also like</h3>
+            <div class="related-books-grid">
+                <!-- This would be populated with related books based on genre/author -->
+                <div class="related-book-placeholder">
+                    <p>Related books will appear here</p>
+                </div>
+            </div>
+               </div>
+   </div>
+</div>
+
+<script>
+    function addBookToCart() {
+        const bookData = {
+            id: '{{ book.id }}',
+            type: 'book',
+            title: '{{ book.title }}',
+            author: '{{ book.author }}',
+            price: {{ book.price }},
+            image: '{{ book.image.url }}' || null,
+            condition: '{{ book.get_condition_display }}'
+        };
+        
+        addToCart(bookData);
+    }
+</script>
+{% endblock %}

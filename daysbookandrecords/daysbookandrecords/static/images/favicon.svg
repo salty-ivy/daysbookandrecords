@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Background circle -->
+  <circle cx="16" cy="16" r="15" fill="#2c3e50"/>
+  
+  <!-- Book icon -->
+  <rect x="8" y="10" width="16" height="12" rx="2" fill="#ecf0f1"/>
+  <rect x="9" y="11" width="14" height="10" rx="1" fill="#3498db"/>
+  
+  <!-- Book pages -->
+  <line x1="12" y1="13" x2="20" y2="13" stroke="#2c3e50" stroke-width="0.5"/>
+  <line x1="12" y1="15" x2="20" y2="15" stroke="#2c3e50" stroke-width="0.5"/>
+  <line x1="12" y1="17" x2="20" y2="17" stroke="#2c3e50" stroke-width="0.5"/>
+  <line x1="12" y1="19" x2="18" y2="19" stroke="#2c3e50" stroke-width="0.5"/>
+  
+  <!-- D for Days -->
+  <text x="16" y="26" font-family="Arial, sans-serif" font-size="8" font-weight="bold" text-anchor="middle" fill="#ecf0f1">D</text>
+</svg>

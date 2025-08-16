@@ -5,70 +5,90 @@
 {% block title %}Records - Days Books & Records{% endblock %}
 
 {% block content %}
-<h1>{{ page.title }}</h1>
-
-{% if page.intro %}
-    <div class="story-item">
-        {{ page.intro|richtext }}
-    </div>
-{% endif %}
-
-<div class="search-filter">
-    <form method="get" class="search-form">
-        <div class="form-group">
-            <label for="search">Search Records:</label>
-            <input type="text" id="search" name="search" value="{{ request.GET.search }}" placeholder="Title, artist, or description...">
-        </div>
-        <div class="form-group">
-            <label for="genre">Filter by Genre:</label>
-            <select id="genre" name="genre">
-                <option value="">All Genres</option>
-                {% for genre in genres %}
-                    <option value="{{ genre }}" {% if request.GET.genre == genre %}selected{% endif %}>{{ genre }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn">Search</button>
-        </div>
-    </form>
-</div>
-
-<div class="items-grid">
-    {% for record in records %}
-        <div class="item-card">
-            {% if record.image %}
-                <img src="{{ record.image.url }}" alt="{{ record.title }}" class="item-image">
-            {% endif %}
-            <h3 class="item-title">{{ record.title }}</h3>
-            {% if record.artist %}
-            <p class="item-author">by {{ record.artist }}</p>
-            {% endif %}
-            {% if record.label %}
-                <p><strong>Label:</strong> {{ record.label }}</p>
-            {% endif %}
-            <p class="item-price">£{{ record.price }}</p>
-            <span class="item-genre">{{ record.genre }}</span>
-            <span class="condition-badge condition-{{ record.condition }}">{{ record.get_condition_display }}</span>
-            {% if record.cat_number %}
-                <p><strong>Cat #:</strong> {{ record.cat_number }}</p>
-            {% endif %}
-            {% if record.sub_genre.all %}
-                <div class="sub-genres">
-                    {% for tag in record.sub_genre.all %}
-                        <span class="sub-genre-tag">{{ tag.name }}</span>
-                    {% endfor %}
+<div class="page-container">
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">{{ page.title }}</h1>
+            {% if page.intro %}
+                <div class="page-intro">
+                    {{ page.intro|richtext }}
                 </div>
             {% endif %}
-            {% if record.description %}
-                <div>{{ record.description|richtext }}</div>
-            {% endif %}
-            {% if record.link %}
-                <a href="{{ record.link }}" target="_blank" class="btn">More Info</a>
-            {% endif %}
         </div>
-    {% empty %}
-        <p>No records found matching your criteria.</p>
-    {% endfor %}
+
+        <div class="page-content">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <form method="get" class="sidebar-search-form">
+                        <div class="search-input-wrapper">
+                            <input type="text" id="search" name="search" value="{{ request.GET.search }}" placeholder="Search records..." class="sidebar-search-input">
+                            <button type="submit" class="sidebar-search-btn">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M21 21L16.514 16.506L21 21ZM19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="sidebar-section">
+                    <ul class="filter-list">
+                        <li><a href="?{% if request.GET.search %}search={{ request.GET.search }}{% endif %}{% if request.GET.condition %}condition={{ request.GET.condition }}{% endif %}" class="filter-link {% if not request.GET.genre %}active{% endif %}">All Genres</a></li>
+                        {% for genre in genres %}
+                            <li><a href="?genre={{ genre }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.condition %}&condition={{ request.GET.condition }}{% endif %}" class="filter-link {% if request.GET.genre == genre %}active{% endif %}">{{ genre }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">Condition</h3>
+                    <ul class="filter-list">
+                        <li><a href="?{% if request.GET.search %}search={{ request.GET.search }}{% endif %}{% if request.GET.genre %}genre={{ request.GET.genre }}{% endif %}" class="filter-link {% if not request.GET.condition %}active{% endif %}">All Conditions</a></li>
+                        <li><a href="?condition=new{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.genre %}&genre={{ request.GET.genre }}{% endif %}" class="filter-link {% if request.GET.condition == 'new' %}active{% endif %}">New</a></li>
+                        <li><a href="?condition=used{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.genre %}&genre={{ request.GET.genre }}{% endif %}" class="filter-link {% if request.GET.condition == 'used' %}active{% endif %}">Used</a></li>
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                {% if records %}
+                    <div class="records-grid">
+                        {% for record in records %}
+                            <article class="record-card">
+                                <a href="{{ record.get_absolute_url }}" class="record-card-link">
+                                    <div class="record-cover-wrapper">
+                                        {% if record.image %}
+                                            <img src="{{ record.image.url }}" alt="{{ record.title }}" class="record-cover">
+                                        {% else %}
+                                            <div class="record-cover-placeholder">
+                                                <span class="placeholder-text">{{ record.title|truncatechars:25 }}</span>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="record-details">
+                                        <h3 class="record-title">{{ record.title }}</h3>
+                                        {% if record.artist %}
+                                            <p class="record-artist">{{ record.artist }}</p>
+                                        {% endif %}
+                                        <p class="record-price">
+                                            £{{ record.price }}
+                                            <span class="book-condition condition-{{ record.condition }}">{{ record.get_condition_display }}</span>
+                                        </p>
+                                    </div>
+                                </a>
+                            </article>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="no-results">
+                        <p>No records found matching your criteria.</p>
+                        <a href="/" class="btn btn-outline">Back to Home</a>
+                    </div>
+                {% endif %}
+            </main>
+        </div>
+    </div>
 </div>
 {% endblock %}
