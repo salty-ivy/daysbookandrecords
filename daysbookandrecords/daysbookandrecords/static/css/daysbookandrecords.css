@@ -370,11 +370,11 @@ p {
 }
 
 .carousel-btn-prev {
-    left: -24px;
+    left: -20px;
 }
 
 .carousel-btn-next {
-    right: -24px;
+    right: -20px;
 }
 
 .carousel-btn svg {
@@ -790,7 +790,7 @@ p {
 .records-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 40px;
+    gap: 80px;
     margin-bottom: 60px;
 }
 
