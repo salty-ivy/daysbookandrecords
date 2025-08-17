@@ -5,16 +5,16 @@
 {% block title %}Home - Days Books & Records{% endblock %}
 
 {% block content %}
+{% if page.intro %}
+    <div class="intro-section">
+        <div class="container-narrow">
+            {{ page.intro|richtext }}
+        </div>
+    </div>
+{% endif %}
 <!-- Hero Section -->
 <div class="hero-section">
     <div class="hero-content">
-        {% if page.intro %}
-        <div class="intro-section">
-            <div class="container-narrow">
-                {{ page.intro|richtext }}
-            </div>
-        </div>
-        {% endif %}
         <p class="hero-subtitle">Curated collections of rare books and vinyl records for discerning collectors</p>
         <div class="hero-buttons">
             <a href="/used-books/" class="btn btn-primary">Browse Used Books</a>
