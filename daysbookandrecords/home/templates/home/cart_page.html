@@ -73,7 +73,7 @@
                         <p class="cart-item-creator">
                             ${item.type === 'book' ? 'by ' + (item.author || 'Unknown Author') : 'by ' + (item.artist || 'Unknown Artist')}
                         </p>
-                        <p class="cart-item-condition">${item.condition}</p>
+                        <span class="condition-badge condition-${item.condition.toLowerCase()}">${item.condition}</span>
                         <div class="cart-item-price">£${item.price.toFixed(2)}</div>
                     </div>
                     <div class="cart-item-quantity">
