@@ -1008,9 +1008,9 @@ p {
 
 .book-header,
 .record-header {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     padding-bottom: 30px;
-    border-bottom: 2px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .book-detail-title,
