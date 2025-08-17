@@ -249,6 +249,102 @@
             margin: 0;
         }
 
+        /* Home Page Covers Grid */
+        .covers-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .cover-item {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cover-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .cover-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .cover-image-container {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .cover-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .cover-item:hover .cover-image {
+            transform: scale(1.05);
+        }
+
+        .placeholder-cover {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            background: var(--border-color);
+        }
+
+        .book-placeholder {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+        }
+
+        .record-placeholder {
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+            color: white;
+        }
+
+        .placeholder-text {
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 0 10px;
+            line-height: 1.3;
+        }
+
+        /* Responsive Covers Grid */
+        @media (max-width: 1024px) {
+            .covers-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .covers-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .covers-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+        }
+
         /* Responsive Related Items */
         @media (max-width: 1024px) {
             .related-books-grid,

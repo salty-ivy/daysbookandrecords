@@ -38,7 +38,6 @@
                 </div>
 
                 <div class="sidebar-section">
-                    <h3 class="sidebar-title">Condition</h3>
                     <ul class="filter-list">
                         <li><a href="?{% if request.GET.search %}search={{ request.GET.search }}{% endif %}{% if request.GET.genre %}genre={{ request.GET.genre }}{% endif %}" class="filter-link {% if not request.GET.condition %}active{% endif %}">All Conditions</a></li>
                         <li><a href="?condition=new{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.genre %}&genre={{ request.GET.genre }}{% endif %}" class="filter-link {% if request.GET.condition == 'new' %}active{% endif %}">New</a></li>
