@@ -80,15 +80,33 @@
         </div>
 
         <!-- Related Books Section -->
-        <div class="related-books-section">
-            <h3>Books you might also like</h3>
-            <div class="related-books-grid">
-                <!-- This would be populated with related books based on genre/author -->
-                <div class="related-book-placeholder">
-                    <p>Related books will appear here</p>
+        {% if related_books %}
+            <div class="related-books-section">
+                <h3>Books you might also like</h3>
+                <div class="related-books-grid">
+                    {% for related_book in related_books %}
+                        <div class="related-book-item">
+                            <a href="{{ related_book.get_absolute_url }}" class="related-book-link">
+                                <div class="related-book-cover">
+                                    {% if related_book.image %}
+                                        <img src="{{ related_book.image.url }}" alt="{{ related_book.title }}" class="related-cover-image">
+                                    {% else %}
+                                        <div class="related-cover-placeholder">
+                                            <span class="placeholder-text">{{ related_book.title|truncatechars:20 }}</span>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="related-book-info">
+                                    <h4 class="related-book-title">{{ related_book.title|truncatechars:25 }}</h4>
+                                    <p class="related-book-author">{{ related_book.author|truncatechars:20 }}</p>
+                                    <p class="related-book-price">£{{ related_book.price }}</p>
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
-               </div>
+        {% endif %}
    </div>
 </div>
 

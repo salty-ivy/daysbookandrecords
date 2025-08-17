@@ -16,9 +16,18 @@ def book_detail(request, book_slug):
         
         if not book:
             raise Http404("Book not found")
+        
+        # Get 5 random books from the same genre (excluding current book)
+        related_books = []
+        if book.genre:
+            related_books = Book.objects.filter(
+                genre=book.genre,
+                status='available'
+            ).exclude(id=book.id).order_by('?')[:5]
             
         context = {
             'book': book,
+            'related_books': related_books,
         }
         return render(request, 'home/book_detail.html', context)
     except Http404:

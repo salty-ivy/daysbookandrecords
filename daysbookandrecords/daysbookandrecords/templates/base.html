@@ -139,6 +139,141 @@
             object-position: center;
         }
 
+        /* Related Items Section */
+        .related-books-section,
+        .related-records-section {
+            margin-top: 60px;
+            padding: 40px 0;
+            background-color: var(--background-light);
+            border-radius: 8px;
+        }
+
+        .related-books-section h3,
+        .related-records-section h3 {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--text-primary);
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+
+        .related-books-grid,
+        .related-records-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .related-book-item,
+        .related-record-item {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .related-book-item:hover,
+        .related-record-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .related-book-link,
+        .related-record-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .related-book-cover,
+        .related-record-cover {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .related-cover-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .related-book-item:hover .related-cover-image,
+        .related-record-item:hover .related-cover-image {
+            transform: scale(1.05);
+        }
+
+        .related-cover-placeholder {
+            width: 100%;
+            height: 100%;
+            background: var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+        }
+
+        .related-book-info,
+        .related-record-info {
+            padding: 15px;
+        }
+
+        .related-book-title,
+        .related-record-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0 0 8px 0;
+            line-height: 1.3;
+        }
+
+        .related-book-author,
+        .related-record-artist {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin: 0 0 8px 0;
+            line-height: 1.3;
+        }
+
+        .related-book-price,
+        .related-record-price {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            margin: 0;
+        }
+
+        /* Responsive Related Items */
+        @media (max-width: 1024px) {
+            .related-books-grid,
+            .related-records-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .related-books-grid,
+            .related-records-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .related-books-grid,
+            .related-records-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+        }
+
         /* Responsive Header */
         @media (max-width: 768px) {
             .header-top {

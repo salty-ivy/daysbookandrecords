@@ -80,15 +80,33 @@
         </div>
 
         <!-- Related Records Section -->
-        <div class="related-records-section">
-            <h3>Records you might also like</h3>
-            <div class="related-records-grid">
-                <!-- This would be populated with related records based on genre/artist -->
-                <div class="related-record-placeholder">
-                    <p>Related records will appear here</p>
+        {% if related_records %}
+            <div class="related-records-section">
+                <h3>Records you might also like</h3>
+                <div class="related-records-grid">
+                    {% for related_record in related_records %}
+                        <div class="related-record-item">
+                            <a href="{{ related_record.get_absolute_url }}" class="related-record-link">
+                                <div class="related-record-cover">
+                                    {% if related_record.image %}
+                                        <img src="{{ related_record.image.url }}" alt="{{ related_record.title }}" class="related-cover-image">
+                                    {% else %}
+                                        <div class="related-cover-placeholder">
+                                            <span class="placeholder-text">{{ related_record.title|truncatechars:20 }}</span>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="related-record-info">
+                                    <h4 class="related-record-title">{{ related_record.title|truncatechars:25 }}</h4>
+                                    <p class="related-record-artist">{{ related_record.artist|truncatechars:20 }}</p>
+                                    <p class="related-record-price">£{{ related_record.price }}</p>
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
-               </div>
+        {% endif %}
    </div>
 </div>
 
