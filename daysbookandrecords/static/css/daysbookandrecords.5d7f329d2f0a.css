@@ -198,7 +198,7 @@ p {
     font-size: 1.1rem;
     text-align: center;
     color: var(--text-secondary);
-    max-width: 800px;
+    max-width: 600px;
     margin: 0 auto;
 }
 
