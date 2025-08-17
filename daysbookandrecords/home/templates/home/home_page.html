@@ -1,6 +1,7 @@
 <!-- home_page.html -->
 {% extends "base.html" %}
 {% load wagtailcore_tags %}
+{% load static %}
 
 {% block title %}Home - Days Books & Records{% endblock %}
 
@@ -12,15 +13,10 @@
         </div>
     </div>
 {% endif %}
-<!-- Hero Section -->
-<div class="hero-section">
-    <div class="hero-content">
-        <p class="hero-subtitle">Curated collections of rare books and vinyl records for discerning collectors</p>
-        <div class="hero-buttons">
-            <a href="/used-books/" class="btn btn-primary">Browse Used Books</a>
-            <a href="/new-books/" class="btn btn-secondary">Browse New Books</a>
-            <a href="/records/" class="btn btn-tertiary">Browse Records</a>
-        </div>
+<!-- Hero Image Section -->
+<div class="hero-image-section">
+    <div class="hero-image-container">
+        <img src="{% static 'images/bookstore.jpg' %}" alt="Days Books & Records - Beautiful bookstore interior" class="hero-image">
     </div>
 </div>
 

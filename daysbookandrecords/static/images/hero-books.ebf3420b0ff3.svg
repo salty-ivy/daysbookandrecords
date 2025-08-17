@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 500" width="1920" height="500">
+  <!-- Background -->
+  <rect width="1920" height="500" fill="#2c3e50"/>
+  
+  <!-- Simple decorative elements -->
+  <!-- Left side books -->
+  <g fill="#e74c3c" opacity="0.8">
+    <rect x="100" y="100" width="40" height="60" rx="3"/>
+    <rect x="150" y="120" width="40" height="60" rx="3"/>
+    <rect x="200" y="140" width="40" height="60" rx="3"/>
+  </g>
+  
+  <g fill="#3498db" opacity="0.8">
+    <rect x="120" y="180" width="40" height="60" rx="3"/>
+    <rect x="170" y="200" width="40" height="60" rx="3"/>
+    <rect x="220" y="220" width="40" height="60" rx="3"/>
+  </g>
+  
+  <g fill="#f39c12" opacity="0.8">
+    <rect x="140" y="260" width="40" height="60" rx="3"/>
+    <rect x="190" y="280" width="40" height="60" rx="3"/>
+    <rect x="240" y="300" width="40" height="60" rx="3"/>
+  </g>
+  
+  <!-- Right side records -->
+  <g fill="#9b59b6" opacity="0.8">
+    <circle cx="1600" cy="150" r="50"/>
+    <circle cx="1700" cy="200" r="45"/>
+    <circle cx="1800" cy="120" r="40"/>
+  </g>
+  
+  <g fill="#e74c3c" opacity="0.8">
+    <circle cx="1650" cy="250" r="35"/>
+    <circle cx="1750" cy="300" r="30"/>
+    <circle cx="1850" cy="250" r="25"/>
+  </g>
+  
+  <!-- Center area -->
+  <rect x="800" y="200" width="320" height="100" fill="#34495e" opacity="0.6" rx="10"/>
+  
+  <!-- Decorative lines -->
+  <line x1="0" y1="250" x2="1920" y2="250" stroke="#ecf0f1" stroke-width="2" opacity="0.3"/>
+  <line x1="0" y1="400" x2="1920" y2="400" stroke="#ecf0f1" stroke-width="1" opacity="0.2"/>
+</svg>

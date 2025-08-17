@@ -59,7 +59,7 @@ p {
 .hero-section {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     color: white;
-    padding: 80px 20px;
+    padding: 125px 20px;
     text-align: center;
     margin-bottom: 60px;
 }
@@ -91,6 +91,20 @@ p {
     gap: 1rem;
     justify-content: center;
     flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+/* Responsive hero buttons for three buttons */
+@media (max-width: 768px) {
+    .hero-buttons {
+        gap: 0.75rem;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero-buttons .btn {
+        min-width: 200px;
+    }
 }
 
 /* Buttons */
@@ -144,6 +158,32 @@ p {
     transform: translateY(-2px);
 }
 
+.btn-tertiary {
+    background-color: #f39c12;
+    color: white;
+    border-color: #f39c12;
+}
+
+.btn-tertiary:hover {
+    background-color: #e67e22;
+    border-color: #e67e22;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}
+
+.btn-essential {
+    background-color: #95a5a6;
+    color: white;
+    border-color: #95a5a6;
+}
+
+.btn-essential:hover {
+    background-color: #7f8c8d;
+    border-color: #7f8c8d;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}
+
 .btn-small {
     padding: 8px 16px;
     font-size: 0.85rem;
@@ -151,9 +191,7 @@ p {
 
 /* Intro Section */
 .intro-section {
-    padding: 60px 0;
-    background-color: var(--background-light);
-    margin-bottom: 60px;
+    margin-bottom: 24px;
 }
 
 .intro-section p {
@@ -166,8 +204,8 @@ p {
 
 /* Featured Sections */
 .featured-section {
-    margin-bottom: 80px;
-    padding: 60px 0;
+    margin-bottom: 60px;
+    padding: 0;
 }
 
 .section-header {
@@ -216,15 +254,9 @@ p {
     background: var(--background-white);
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: var(--transition);
     border: 1px solid var(--border-color);
     text-align: center;
-}
-
-.carousel-item:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2), 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .carousel-item-link {
@@ -253,12 +285,12 @@ p {
     height: 100%;
     object-fit: cover;
     transition: var(--transition);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25), 0 3px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 7px 14px 11px -10px rgba(0, 0, 0, 0.3);
 }
 
 .carousel-item:hover .cover-image {
     transform: scale(1.05);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 5px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 7px 14px 11px -10px rgba(0, 0, 0, 0.3);
 }
 
 /* Book Cover Styles - Long/Rectangular */
@@ -266,15 +298,11 @@ p {
     flex: 0 0 200px;
     min-width: 200px;
     height: 300px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2), 0 4px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 7px 14px 11px -10px rgba(0, 0, 0, 0.3);
 }
 
 .book-cover .cover-image-container {
     height: 300px;
-}
-
-.book-cover:hover {
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3), 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 /* Record Cover Styles - Square */
@@ -282,15 +310,11 @@ p {
     flex: 0 0 250px;
     min-width: 250px;
     height: 250px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2), 0 4px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 7px 14px 11px -10px rgba(0, 0, 0, 0.3);
 }
 
 .record-cover .cover-image-container {
     height: 250px;
-}
-
-.record-cover:hover {
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3), 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 /* Placeholder Styles */
@@ -305,19 +329,19 @@ p {
     font-size: 0.9rem;
     text-align: center;
     padding: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.08);
+    box-shadow: 7px 14px 11px -10px rgba(0, 0, 0, 0.3);
 }
 
 .book-placeholder {
     background-color: #f8f9fa;
     border: 2px dashed #dee2e6;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15), 0 3px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 7px 14px 11px -10px rgba(0, 0, 0, 0.3);
 }
 
 .record-placeholder {
     background-color: #f8f9fa;
     border: 2px dashed #dee2e6;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15), 0 3px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 7px 14px 11px -10px rgba(0, 0, 0, 0.3);
 }
 
 .carousel-btn {
@@ -346,11 +370,11 @@ p {
 }
 
 .carousel-btn-prev {
-    left: -24px;
+    left: -20px;
 }
 
 .carousel-btn-next {
-    right: -24px;
+    right: -20px;
 }
 
 .carousel-btn svg {
@@ -394,7 +418,7 @@ p {
 
 .item-image {
     width: 100%;
-    height: 100%;
+    height: 95%;
     object-fit: cover;
     transition: var(--transition);
 }
@@ -405,7 +429,7 @@ p {
 
 .placeholder-image {
     width: 100%;
-    height: 100%;
+    height: 95%;
     background-color: var(--background-light);
     display: flex;
     align-items: center;
@@ -595,7 +619,7 @@ p {
 
 .page-header {
     background-color: var(--background-light);
-    padding: 60px 0;
+    padding: 10px 0;
     text-align: center;
     margin-bottom: 0;
     border-bottom: 1px solid var(--border-color);
@@ -629,7 +653,7 @@ p {
 .sidebar {
     flex: 0 0 280px;
     background-color: var(--background-white);
-    padding: 0 20px;
+    padding: 0 20px 0 0;
 }
 
 .sidebar-section {
@@ -663,7 +687,7 @@ p {
     font-size: 0.95rem;
     font-family: inherit;
     transition: var(--transition);
-    padding-right: 40px;
+    padding-right: 44px;
 }
 
 .sidebar-search-input:focus {
@@ -681,18 +705,47 @@ p {
     color: white;
     border: none;
     border-radius: 4px;
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: var(--transition);
+    padding: 0;
+}
+
+.sidebar-search-btn svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+/* Ensure search icons display correctly on all pages */
+.sidebar-search-btn svg {
+    width: 18px !important;
+    height: 18px !important;
+    max-width: 18px !important;
+    max-height: 18px !important;
+    overflow: visible !important;
+}
+
+/* Additional button styling to prevent icon cutoff */
+.sidebar-search-btn {
+    min-width: 32px !important;
+    min-height: 32px !important;
+    box-sizing: border-box !important;
+}
+
+.sidebar-search-btn svg {
+    display: block !important;
+    margin: auto !important;
 }
 
 .sidebar-search-btn:hover {
     background: #c0392b;
     transform: translateY(-50%) scale(1.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .filter-list {
@@ -736,9 +789,25 @@ p {
 .books-grid,
 .records-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 40px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 80px;
     margin-bottom: 60px;
+}
+
+/* Ensure grid items break after every 3 items */
+.books-grid > *:nth-child(3n+1),
+.records-grid > *:nth-child(3n+1) {
+    grid-column: 1;
+}
+
+.books-grid > *:nth-child(3n+2),
+.records-grid > *:nth-child(3n+2) {
+    grid-column: 2;
+}
+
+.books-grid > *:nth-child(3n+3),
+.records-grid > *:nth-child(3n+3) {
+    grid-column: 3;
 }
 
 .book-card,
@@ -788,7 +857,7 @@ p {
 .book-cover,
 .record-cover {
     width: 100%;
-    height: 100%;
+    height: 95%;
     object-fit: cover;
     transition: var(--transition);
     border-radius: 0;
@@ -802,7 +871,7 @@ p {
 .book-cover-placeholder,
 .record-cover-placeholder {
     width: 100%;
-    height: 100%;
+    height: 95%;
     background-color: #e9ecef;
     display: flex;
     align-items: center;
@@ -905,18 +974,14 @@ p {
     position: sticky;
     top: 40px;
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 80px;
 }
 
 .book-detail-cover,
 .record-detail-cover {
     width: 100%;
-    height: 400px;
     object-fit: cover;
-    border-radius: 8px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    box-shadow: 15px 15px 10px -10px rgba(0, 0, 0, 0.5);
 }
 
 .book-detail-cover-placeholder,
@@ -1098,7 +1163,6 @@ p {
 
 /* About Page Styles */
 .about-content {
-    max-width: 800px;
     margin: 0 auto;
 }
 
@@ -1173,150 +1237,150 @@ p {
     .hero-title {
         font-size: 2.5rem;
     }
-    
+
     .hero-subtitle {
         font-size: 1.1rem;
     }
-    
+
     .hero-buttons {
         flex-direction: column;
         align-items: center;
     }
-    
+
     .btn {
         width: 100%;
         max-width: 250px;
     }
-    
+
     .section-title {
         font-size: 2.2rem;
     }
-    
+
     .page-title {
         font-size: 2.2rem;
     }
-    
+
     .page-header {
-        padding: 40px 0;
+        padding: 10px 0;
     }
-    
+
     .page-content {
         flex-direction: column;
         gap: 40px;
         padding: 40px 20px;
     }
-    
+
     .sidebar {
         flex: none;
         width: 100%;
         padding: 0;
     }
-    
+
     .books-grid,
     .records-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         gap: 30px;
     }
-    
+
     .book-cover-wrapper,
     .record-cover-wrapper {
         height: 280px;
     }
-    
+
     .book-detail-content,
     .record-detail-content {
         flex-direction: column;
         gap: 40px;
     }
-    
+
     .about-content {
         max-width: 100%;
         padding: 0 20px;
     }
-    
+
     .about-body {
         padding: 0;
     }
-    
+
     .book-cover-section,
     .record-cover-section {
         flex: none;
         width: 100%;
         position: static;
     }
-    
+
     .book-detail-cover,
     .record-detail-cover {
         height: 400px;
     }
-    
+
     .book-detail-cover-placeholder,
     .record-detail-cover-placeholder {
         height: 400px;
     }
-    
+
     .related-books-grid,
     .related-records-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 20px;
     }
-    
+
     .carousel-container {
         margin: 0 20px 50px;
     }
-    
+
     .carousel-item {
         flex: 0 0 250px;
         min-width: 250px;
     }
-    
+
     .book-cover {
         flex: 0 0 180px;
         min-width: 180px;
         height: 270px;
     }
-    
+
     .book-cover .cover-image-container {
         height: 270px;
     }
-    
+
     .record-cover {
         flex: 0 0 220px;
         min-width: 220px;
         height: 220px;
     }
-    
+
     .record-cover .cover-image-container {
         height: 220px;
     }
-    
+
     .carousel-btn {
         width: 40px;
         height: 40px;
     }
-    
+
     .carousel-btn-prev {
         left: -20px;
     }
-    
+
     .carousel-btn-next {
         right: -20px;
     }
-    
+
     .items-grid {
         grid-template-columns: 1fr;
         gap: 30px;
         padding: 0 20px;
     }
-    
+
     .newsletter-form {
         flex-direction: column;
     }
-    
+
     .newsletter-input {
         min-width: auto;
     }
-    
+
     nav ul {
         gap: 25px;
     }
@@ -1326,134 +1390,134 @@ p {
     .hero-section {
         padding: 60px 20px;
     }
-    
+
     .hero-title {
         font-size: 2rem;
     }
-    
+
     .page-title {
         font-size: 1.8rem;
     }
-    
+
     .page-header {
-        padding: 30px 0;
+        padding: 10px 0;
     }
-    
+
     .page-content {
         padding: 30px 15px;
         gap: 30px;
     }
-    
+
     .sidebar {
         padding: 0;
     }
-    
+
     .sidebar-title {
         font-size: 1.2rem;
     }
-    
+
     .books-grid,
     .records-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
         gap: 30px;
     }
-    
+
     .book-cover-wrapper,
     .record-cover-wrapper {
         height: 250px;
     }
-    
+
     .book-detail-content,
     .record-detail-content {
         gap: 30px;
     }
-    
+
     .book-detail-title,
     .record-detail-title {
         font-size: 1.8rem;
     }
-    
+
     .book-detail-cover,
     .record-detail-cover {
         height: 300px;
     }
-    
+
     .book-detail-cover-placeholder,
     .record-detail-cover-placeholder {
         height: 300px;
     }
-    
+
     .related-books-grid,
     .related-records-grid {
         grid-template-columns: 1fr;
         gap: 15px;
     }
-    
+
     .book-actions,
     .record-actions {
         flex-direction: column;
     }
-    
+
     .btn-large {
         width: 100%;
     }
-    
+
     .carousel-container {
         margin: 0 15px 50px;
     }
-    
+
     .carousel-item {
         flex: 0 0 220px;
         min-width: 220px;
     }
-    
+
     .book-cover {
         flex: 0 0 160px;
         min-width: 160px;
         height: 240px;
     }
-    
+
     .book-cover .cover-image-container {
         height: 240px;
     }
-    
+
     .record-cover {
         flex: 0 0 200px;
         min-width: 200px;
         height: 200px;
     }
-    
+
     .record-cover .cover-image-container {
         height: 200px;
     }
-    
+
     .carousel-btn {
         width: 36px;
         height: 36px;
     }
-    
+
     .carousel-btn-prev {
         left: -18px;
     }
-    
+
     .carousel-btn-next {
         right: -18px;
     }
-    
+
     .card-content {
         padding: 25px 20px;
     }
-    
+
     .item-title {
         font-size: 1.3rem;
     }
-    
+
     nav ul {
         gap: 20px;
         flex-direction: column;
         gap: 15px;
     }
-    
+
     .section-title {
         font-size: 1.8rem;
     }
