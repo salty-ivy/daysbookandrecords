@@ -1,6 +1,6 @@
 # admin.py
 from django.contrib import admin
-from .models import Book, Record
+from .models import Book, Record, NewsPage
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
@@ -27,3 +27,9 @@ class RecordAdmin(admin.ModelAdmin):
             obj.added_by = request.user
         obj.updated_by = request.user
         super().save_model(request, obj, form, change)
+
+@admin.register(NewsPage)
+class NewsPageAdmin(admin.ModelAdmin):
+    list_display = ['title', 'slug', 'first_published_at']
+    search_fields = ['title', 'body']
+    prepopulated_fields = {'slug': ('title',)}

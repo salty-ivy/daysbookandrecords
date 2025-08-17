@@ -6,7 +6,7 @@ from wagtail_modeladmin.options import (
     modeladmin_register
 )
 
-from .models import Book, Record
+from .models import Book, Record, NewsPage
 
 
 class BookAdmin(ModelAdmin):
@@ -36,3 +36,16 @@ class RecordAdmin(ModelAdmin):
 
 modeladmin_register(BookAdmin)
 modeladmin_register(RecordAdmin)
+
+class NewsPageAdmin(ModelAdmin):
+    model = NewsPage
+    menu_label = "News Pages"
+    menu_icon = "doc-full"
+    menu_order = 300
+    add_to_settings_menu = False
+    exclude_from_explorer = False
+    list_display = ['title', 'slug', 'first_published_at']
+    search_fields = ['title', 'body']
+    prepopulated_fields = {'slug': ('title',)}
+
+modeladmin_register(NewsPageAdmin)

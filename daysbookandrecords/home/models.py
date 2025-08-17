@@ -199,6 +199,13 @@ class AboutPage(Page):
         FieldPanel('body'),
     ]
 
+class NewsPage(Page):
+    body = RichTextField()
+
+    content_panels = Page.content_panels + [
+        FieldPanel('body'),
+    ]
+
 class ContactPage(Page):
     body = RichTextField()
     email = models.EmailField(blank=True)
