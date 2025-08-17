@@ -24,55 +24,10 @@
     </div>
 </div>
 
-<!-- Featured Used Books Section -->
-<section class="featured-section">
-    <div class="section-header">
-        <h2 class="section-title">Featured Used Books</h2>
-        <p class="section-subtitle">Discover our latest arrivals and rare finds</p>
-    </div>
-
-    <div class="carousel-container">
-        <div class="carousel-wrapper">
-            <div class="carousel-track">
-                {% for book in recent_used_books %}
-                    <article class="carousel-item book-cover">
-                        <a href="{{ book.get_absolute_url }}" class="carousel-item-link">
-                            <div class="cover-image-container">
-                                {% if book.image %}
-                                    <img src="{{ book.image.url }}" alt="{{ book.title }}" class="cover-image">
-                                {% else %}
-                                    <div class="placeholder-cover book-placeholder">
-                                        <span class="placeholder-text">{{ book.title|truncatechars:20 }}</span>
-                                    </div>
-                                {% endif %}
-                            </div>
-                        </a>
-                    </article>
-                {% endfor %}
-            </div>
-        </div>
-
-        <button class="carousel-btn carousel-btn-prev" aria-label="Previous">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </button>
-        <button class="carousel-btn carousel-btn-next" aria-label="Next">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </button>
-    </div>
-
-    <div class="section-footer">
-        <a href="/used-books/" class="btn btn-outline">See more used books...</a>
-    </div>
-</section>
-
 <!-- Featured New Books Section -->
 <section class="featured-section">
     <div class="section-header">
-        <h2 class="section-title">Featured New Books</h2>
+        <h2 class="section-title">New Books</h2>
         <p class="section-subtitle">Fresh arrivals and latest releases</p>
     </div>
 
@@ -117,7 +72,7 @@
 <!-- Featured Records Section -->
 <section class="featured-section">
     <div class="section-header">
-        <h2 class="section-title">Featured Records</h2>
+        <h2 class="section-title">New Records</h2>
         <p class="section-subtitle">Vinyl treasures from classic to contemporary</p>
     </div>
 
@@ -156,6 +111,51 @@
 
     <div class="section-footer">
         <a href="/records/" class="btn btn-outline">See more records...</a>
+    </div>
+</section>
+
+<!-- Featured Used Books Section -->
+<section class="featured-section">
+    <div class="section-header">
+        <h2 class="section-title">Used Books</h2>
+        <p class="section-subtitle">Discover our latest arrivals and rare finds</p>
+    </div>
+
+    <div class="carousel-container">
+        <div class="carousel-wrapper">
+            <div class="carousel-track">
+                {% for book in recent_used_books %}
+                    <article class="carousel-item book-cover">
+                        <a href="{{ book.get_absolute_url }}" class="carousel-item-link">
+                            <div class="cover-image-container">
+                                {% if book.image %}
+                                    <img src="{{ book.image.url }}" alt="{{ book.title }}" class="cover-image">
+                                {% else %}
+                                    <div class="placeholder-cover book-placeholder">
+                                        <span class="placeholder-text">{{ book.title|truncatechars:20 }}</span>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </a>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
+
+        <button class="carousel-btn carousel-btn-prev" aria-label="Previous">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+        <button class="carousel-btn carousel-btn-next" aria-label="Next">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+    </div>
+
+    <div class="section-footer">
+        <a href="/used-books/" class="btn btn-outline">See more used books...</a>
     </div>
 </section>
 
