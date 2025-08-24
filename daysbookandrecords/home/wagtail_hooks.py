@@ -28,8 +28,8 @@ class RecordAdmin(ModelAdmin):
     menu_order = 200
     add_to_settings_menu = False
     exclude_from_explorer = False
-    ist_display = ['title', 'artist', 'genre', 'price', 'status', 'created_at', 'featured']
-    list_filter = ['genre', 'condition', 'status', 'created_at']
+    list_display = ['title', 'artist', 'genre', 'condition', 'format', 'price', 'status', 'created_at', 'featured']
+    list_filter = ['genre', 'condition', 'format', 'status', 'created_at']
     search_fields = ['title', 'artist', 'cat_number']
     readonly_fields = ['created_at', 'updated_at']
 

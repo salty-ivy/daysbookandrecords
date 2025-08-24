@@ -83,6 +83,14 @@ class Record(ClusterableModel):
         ('used', 'Used'),
     ]
 
+    FORMAT_CHOICES = [
+        ('LP', 'LP'),
+        ('Singles', 'Singles'),
+        ('7"', '7"'),
+        ('10"', '10"'),
+        ('12"', '12"'),
+    ]
+
     image = models.ImageField(upload_to='records/', blank=True, null=True)
     title = models.CharField(max_length=200)
     artist = models.CharField(max_length=200)
@@ -90,6 +98,7 @@ class Record(ClusterableModel):
     genre = models.CharField(max_length=100)
     sub_genre = ClusterTaggableManager(through=RecordSubGenreTag, blank=True)
     condition = models.CharField(max_length=10, choices=CONDITION_CHOICES, default='used')
+    format = models.CharField(max_length=10, choices=FORMAT_CHOICES, default='LP')
     price = models.DecimalField(max_digits=10, decimal_places=2)
     cat_number = models.CharField(max_length=50, blank=True, verbose_name="Catalog Number")
     description = RichTextField(blank=True)

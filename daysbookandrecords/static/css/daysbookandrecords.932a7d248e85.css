@@ -522,15 +522,16 @@ p {
 }
 
 .condition-badge {
-    border-radius: 4px;
+    padding: 4px 10px;
+    border-radius: 8px;
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     min-width: 50px;
     text-align: center;
-    height: 24px;
-    line-height: 24px;
+    height: 28px;
+    line-height: 20px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -548,15 +549,16 @@ p {
 
 /* Format Badge Styles */
 .format-badge {
-    border-radius: 4px;
+    padding: 4px 10px;
+    border-radius: 8px;
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     min-width: 50px;
     text-align: center;
-    height: 24px;
-    line-height: 24px;
+    height: 28px;
+    line-height: 20px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -983,12 +985,13 @@ p {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    margin-left: 4px;
-    border-radius: 4px;
+    margin-right: 8px;
+    padding: 4px 10px;
+    border-radius: 8px;
     min-width: 50px;
     text-align: center;
-    height: 24px;
-    line-height: 24px;
+    height: 28px;
+    line-height: 20px;
 }
 
 .condition-new {

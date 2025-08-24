@@ -70,6 +70,7 @@
                                         <p class="record-price">
                                             £{{ record.price }}
                                             <span class="book-condition condition-{{ record.condition }}">{{ record.get_condition_display }}</span>
+                                            <span class="format-badge format-{{ record.format|lower }}">{{ record.get_format_display }}</span>
                                         </p>
                                     </div>
                                 </a>

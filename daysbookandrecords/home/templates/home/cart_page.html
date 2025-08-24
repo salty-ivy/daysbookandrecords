@@ -74,6 +74,7 @@
                             ${item.type === 'book' ? 'by ' + (item.author || 'Unknown Author') : 'by ' + (item.artist || 'Unknown Artist')}
                         </p>
                         <span class="condition-badge condition-${item.condition.toLowerCase()}">${item.condition}</span>
+                        ${item.format ? `<span class="format-badge format-${item.format.toLowerCase()}">${item.format}</span>` : ''}
                         <div class="cart-item-price">£${item.price.toFixed(2)}</div>
                     </div>
                     <div class="cart-item-quantity">

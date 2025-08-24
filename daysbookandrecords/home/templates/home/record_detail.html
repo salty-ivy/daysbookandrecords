@@ -32,6 +32,10 @@
                         <span class="meta-label">Condition:</span>
                         <span class="record-condition condition-{{ record.condition }}">{{ record.get_condition_display }}</span>
                     </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Format:</span>
+                        <span class="format-badge format-{{ record.format|lower }}">{{ record.get_format_display }}</span>
+                    </div>
                     {% if record.genre %}
                         <div class="meta-item">
                             <span class="meta-label">Genre:</span>
@@ -119,7 +123,8 @@
             artist: '{{ record.artist }}',
             price: {{ record.price }},
             image: '{{ record.image.url }}' || null,
-            condition: '{{ record.get_condition_display }}'
+            condition: '{{ record.get_condition_display }}',
+            format: '{{ record.get_format_display }}'
         };
         
         addToCart(recordData);

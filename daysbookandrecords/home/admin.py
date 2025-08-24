@@ -17,8 +17,8 @@ class BookAdmin(admin.ModelAdmin):
 
 @admin.register(Record)
 class RecordAdmin(admin.ModelAdmin):
-    list_display = ['title', 'artist', 'genre', 'condition', 'price', 'status', 'created_at']
-    list_filter = ['genre', 'condition', 'status', 'created_at']
+    list_display = ['title', 'artist', 'genre', 'condition', 'format', 'price', 'status', 'created_at']
+    list_filter = ['genre', 'condition', 'format', 'status', 'created_at']
     search_fields = ['title', 'artist', 'cat_number']
     readonly_fields = ['created_at', 'updated_at']
 

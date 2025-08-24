@@ -522,12 +522,18 @@ p {
 }
 
 .condition-badge {
-    padding: 4px 10px;
-    border-radius: 12px;
+    border-radius: 4px;
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    min-width: 50px;
+    text-align: center;
+    height: 24px;
+    line-height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .condition-new {
@@ -538,6 +544,54 @@ p {
 .condition-used {
     background-color: #fef9e7;
     color: #f39c12;
+}
+
+/* Format Badge Styles */
+.format-badge {
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    min-width: 50px;
+    text-align: center;
+    height: 24px;
+    line-height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 4px;
+}
+
+/* Ensure format badges are visible in cart */
+.cart-item-details .format-badge {
+    margin-left: 4px;
+    margin-right: 8px;
+}
+
+.format-lp {
+    background-color: #e8f4fd;
+    color: #3498db;
+}
+
+.format-singles {
+    background-color: #fdf2f8;
+    color: #e91e63;
+}
+
+.format-7" {
+    background-color: #f0f9ff;
+    color: #0ea5e9;
+}
+
+.format-10" {
+    background-color: #f0fdf4;
+    color: #16a34a;
+}
+
+.format-12" {
+    background-color: #fef3c7;
+    color: #d97706;
 }
 
 .item-description {
@@ -922,14 +976,19 @@ p {
 
 .book-condition,
 .record-condition {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    margin-right: 8px;
-    padding: 2px 6px;
-    border-radius: 3px;
+    margin-left: 4px;
+    border-radius: 4px;
+    min-width: 50px;
+    text-align: center;
+    height: 24px;
+    line-height: 24px;
 }
 
 .condition-new {
