@@ -20,6 +20,8 @@ urlpatterns = [
     path("new-books/", home_views.new_books, name="new_books"),     # New books page
     path("records/", home_views.records_view, name="records"),      # Records page
     path("cart/", home_views.cart_view, name="cart"),               # Cart page
+    path("news/", home_views.news_listing, name="news_listing"),    # News listing page
+    path("news/<str:news_slug>/", home_views.news_detail, name="news_detail"),  # News detail page
 ]
 
 

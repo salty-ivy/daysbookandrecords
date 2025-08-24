@@ -141,6 +141,8 @@ class HomePage(Page):
         context['recent_used_books'] = Book.objects.filter(featured=1, condition='used')[:6]
         context['recent_new_books'] = Book.objects.filter(featured=1, condition='new')[:6]
         context['recent_records'] = Record.objects.filter(featured=1)
+        # Get recent featured news articles
+        context['recent_news'] = NewsArticle.objects.filter(featured=1, status='published').order_by('-publish_date')[:3]
         return context
 
 class BooksPage(Page):
@@ -208,12 +210,53 @@ class AboutPage(Page):
         FieldPanel('body'),
     ]
 
-class NewsPage(Page):
-    body = RichTextField()
 
-    content_panels = Page.content_panels + [
-        FieldPanel('body'),
+
+class NewsArticle(ClusterableModel):
+    STATUS_CHOICES = [
+        ('draft', 'Draft'),
+        ('published', 'Published'),
     ]
+
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=200, unique=True, blank=True, null=True, verbose_name="Slug (Optional)")
+    author = models.CharField(max_length=100)
+    publish_date = models.DateTimeField()
+    featured_image = models.ImageField(upload_to='news/', blank=True, null=True)
+    excerpt = models.TextField(max_length=300, help_text="Brief summary for the news listing page")
+    content = RichTextField()
+    featured = models.BooleanField(default=False, help_text="Mark as featured news")
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='draft')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        """Auto-generate slug from title if not provided"""
+        if not self.slug:
+            from django.utils.text import slugify
+            base_slug = slugify(self.title)
+            self.slug = base_slug
+            
+            # Ensure slug uniqueness
+            counter = 1
+            while NewsArticle.objects.filter(slug=self.slug).exclude(id=self.id).exists():
+                self.slug = f"{base_slug}-{counter}"
+                counter += 1
+        
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        """Get the absolute URL for the news detail page"""
+        if self.slug:
+            return f'/news/{self.slug}/'
+        else:
+            return f'/news/{self.id}/'
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ['-publish_date']
 
 class ContactPage(Page):
     body = RichTextField()

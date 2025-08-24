@@ -1,0 +1,69 @@
+<!-- news_listing.html -->
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block title %}News - Days Books & Records{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">News & Reviews</h1>
+            <p class="page-intro">Latest updates, book reviews, and literary insights from our team</p>
+        </div>
+        
+        <div class="page-content">
+            <main class="main-content">
+                {% if news_articles %}
+                    <div class="news-grid">
+                        {% for article in news_articles %}
+                            <article class="news-card">
+                                <div class="news-image-wrapper">
+                                    {% if article.featured_image %}
+                                        <img src="{{ article.featured_image.url }}" alt="{{ article.title }}" class="news-image">
+                                    {% else %}
+                                        <div class="news-image-placeholder">
+                                            <span class="placeholder-text">{{ article.title|truncatechars:30 }}</span>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="news-content">
+                                    <h3 class="news-title">{{ article.title }}</h3>
+                                    <div class="news-meta">
+                                        <span class="news-date">{{ article.publish_date|date:"M j, Y" }}</span>
+                                        <span class="news-author">by {{ article.author }}</span>
+                                    </div>
+                                    <p class="news-excerpt">{{ article.excerpt|truncatechars:150 }}</p>
+                                    <a href="{{ article.get_absolute_url }}" class="news-read-more">Read more</a>
+                                </div>
+                            </article>
+                        {% endfor %}
+                    </div>
+                    
+                    <!-- Pagination -->
+                    {% if news_articles.has_other_pages %}
+                        <div class="pagination">
+                            {% if news_articles.has_previous %}
+                                <a href="?page={{ news_articles.previous_page_number }}" class="pagination-link">&laquo; Previous</a>
+                            {% endif %}
+                            
+                            <span class="pagination-current">
+                                Page {{ news_articles.number }} of {{ news_articles.paginator.num_pages }}
+                            </span>
+                            
+                            {% if news_articles.has_next %}
+                                <a href="?page={{ news_articles.next_page_number }}" class="pagination-link">Next &raquo;</a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="no-results">
+                        <p>No news articles found.</p>
+                        <a href="/" class="btn btn-outline">Back to Home</a>
+                    </div>
+                {% endif %}
+            </main>
+        </div>
+    </div>
+</div>
+{% endblock %}

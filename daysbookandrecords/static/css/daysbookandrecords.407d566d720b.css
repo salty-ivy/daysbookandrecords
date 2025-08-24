@@ -865,23 +865,11 @@ p {
     font-weight: 500;
 }
 
-/* Home Page News Grid - 3 columns in a row */
-.featured-section .news-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-    margin-bottom: 0;
-}
-
 /* Responsive News Grid */
 @media (max-width: 1024px) {
     .news-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 30px;
-    }
-    
-    .featured-section .news-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 25px;
     }
     
     .related-articles-grid {

@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import Http404
 from django.core.paginator import Paginator
 from django.db import models
-from .models import Book, Record
+from .models import Book, Record, NewsArticle
 
 def book_detail(request, book_slug):
     """View for individual book detail page"""
@@ -202,3 +202,37 @@ def records_view(request):
 def cart_view(request):
     """View for cart page"""
     return render(request, 'home/cart_page.html')
+
+def news_listing(request):
+    """View for news listing page"""
+    # Get published news articles
+    news_articles = NewsArticle.objects.filter(status='published').order_by('-publish_date')
+    
+    # Pagination
+    paginator = Paginator(news_articles, 9)  # 9 articles per page (3 rows of 3)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    context = {
+        'news_articles': page_obj,
+    }
+    
+    return render(request, 'home/news_listing.html', context)
+
+def news_detail(request, news_slug):
+    """View for individual news article"""
+    try:
+        article = NewsArticle.objects.get(slug=news_slug, status='published')
+        
+        # Get 3 related articles (excluding current)
+        related_articles = NewsArticle.objects.filter(
+            status='published'
+        ).exclude(id=article.id).order_by('-publish_date')[:3]
+        
+        context = {
+            'article': article,
+            'related_articles': related_articles,
+        }
+        return render(request, 'home/news_detail.html', context)
+    except NewsArticle.DoesNotExist:
+        raise Http404("News article not found")

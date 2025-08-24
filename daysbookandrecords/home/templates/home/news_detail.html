@@ -1,0 +1,69 @@
+<!-- news_detail.html -->
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block title %}{{ article.title }} - Days Books & Records{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <div class="container">
+        <div class="page-content">
+            <main class="main-content news-detail-content">
+                <!-- Article Header -->
+                <header class="news-detail-header">
+                    <h1 class="news-detail-title">{{ article.title }}</h1>
+                    <div class="news-detail-meta">
+                        <span class="news-detail-date">{{ article.publish_date|date:"F j, Y" }}</span>
+                        <span class="news-detail-author">by {{ article.author }}</span>
+                    </div>
+                </header>
+
+                <!-- Featured Image -->
+                {% if article.featured_image %}
+                    <div class="news-detail-image-wrapper">
+                        <img src="{{ article.featured_image.url }}" alt="{{ article.title }}" class="news-detail-image">
+                    </div>
+                {% endif %}
+
+                <!-- Article Content -->
+                <div class="news-detail-body">
+                    {{ article.content|richtext }}
+                </div>
+
+                <!-- Related Articles -->
+                {% if related_articles %}
+                    <div class="related-articles-section">
+                        <h3>More from our news</h3>
+                        <div class="related-articles-grid">
+                            {% for related_article in related_articles %}
+                                <article class="related-article-item">
+                                    <a href="{{ related_article.get_absolute_url }}" class="related-article-link">
+                                        <div class="related-article-image">
+                                            {% if related_article.featured_image %}
+                                                <img src="{{ related_article.featured_image.url }}" alt="{{ related_article.title }}" class="related-article-cover">
+                                            {% else %}
+                                                <div class="related-article-placeholder">
+                                                    <span class="placeholder-text">{{ related_article.title|truncatechars:20 }}</span>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="related-article-info">
+                                            <h4 class="related-article-title">{{ related_article.title|truncatechars:40 }}</h4>
+                                            <p class="related-article-date">{{ related_article.publish_date|date:"M j, Y" }}</p>
+                                        </div>
+                                    </a>
+                                </article>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Back to News -->
+                <div class="news-detail-footer">
+                    <a href="/news/" class="btn btn-outline">← Back to News</a>
+                </div>
+            </main>
+        </div>
+    </div>
+</div>
+{% endblock %}
