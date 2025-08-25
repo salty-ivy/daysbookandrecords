@@ -983,11 +983,9 @@ p {
 }
 
 .newsletter-form {
-    display: flex;
     gap: 1rem;
     max-width: 500px;
     margin: 0 auto;
-    flex-wrap: wrap;
 }
 
 .newsletter-input {
