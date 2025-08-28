@@ -403,18 +403,8 @@
 
         nav {
             margin: 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
             background-color: #ffffff;
             padding: 15px 0;
-            transition: all 0.3s ease;
-        }
-
-        /* Sticky navigation behavior */
-        nav.sticky {
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
         }
 
         /* Mobile menu toggle button */
@@ -430,7 +420,7 @@
             padding: 0;
             position: absolute;
             left: 50%;
-            top: 0%;
+            top: 75%;
             transform: translate(-50%, -50%);
         }
 
@@ -1020,13 +1010,17 @@
                 background-color: rgba(0, 0, 0, 0.5);
                 opacity: 0;
                 visibility: hidden;
+                pointer-events: none;
+                display: none;
                 transition: opacity 0.3s ease, visibility 0.3s ease;
                 z-index: 999;
             }
 
             .mobile-menu-overlay.active {
+                display: block;
                 opacity: 1;
                 visibility: visible;
+                pointer-events: auto;
             }
 
             /* Mobile navigation styles - Half screen drawer */
@@ -1579,22 +1573,7 @@
             });
         });
 
-        // Sticky Navigation functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const nav = document.querySelector('nav');
-            const header = document.querySelector('header');
 
-            window.addEventListener('scroll', function() {
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-                // Make navigation sticky when scrolling down
-                if (scrollTop > 100) {
-                    nav.classList.add('sticky');
-                } else {
-                    nav.classList.remove('sticky');
-                }
-            });
-        });
 
         // Mobile menu functionality
         document.addEventListener('DOMContentLoaded', function() {
