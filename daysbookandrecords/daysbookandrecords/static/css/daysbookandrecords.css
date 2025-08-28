@@ -303,6 +303,7 @@ p {
 
 .book-cover .cover-image-container {
     height: 300px;
+    border-radius: 0;
 }
 
 /* Record Cover Styles - Square */
@@ -315,6 +316,7 @@ p {
 
 .record-cover .cover-image-container {
     height: 250px;
+    border-radius: 0;
 }
 
 /* Placeholder Styles */
@@ -1737,21 +1739,23 @@ p {
     .book-cover {
         flex: 0 0 180px;
         min-width: 180px;
-        height: 270px;
+        height: 270px; /* Taller container for books */
     }
 
     .book-cover .cover-image-container {
         height: 270px;
+        border-radius: 0;
     }
 
     .record-cover {
         flex: 0 0 220px;
         min-width: 220px;
-        height: 220px;
+        height: 220px; /* Square container */
     }
 
     .record-cover .cover-image-container {
         height: 220px;
+        border-radius: 0;
     }
 
     .carousel-btn {
@@ -1874,21 +1878,23 @@ p {
     .book-cover {
         flex: 0 0 160px;
         min-width: 160px;
-        height: 240px;
+        height: 240px; /* Taller container for books */
     }
 
     .book-cover .cover-image-container {
         height: 240px;
+        border-radius: 0;
     }
 
     .record-cover {
         flex: 0 0 200px;
         min-width: 200px;
-        height: 200px;
+        height: 200px; /* Square container */
     }
 
     .record-cover .cover-image-container {
         height: 200px;
+        border-radius: 0;
     }
 
     .carousel-btn {
