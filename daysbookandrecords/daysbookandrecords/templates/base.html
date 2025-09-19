@@ -960,7 +960,6 @@
         footer {
             background-color: #2c3e50;
             color: white;
-            text-align: center;
             padding: 20px 0;
             margin-top: 40px;
         }
@@ -971,15 +970,36 @@
         }
 
         footer div.container {
-            padding: 20px 20px 35px;
+            padding: 20px 20px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .left {
-            float: left;
+        /* Footer layout */
+        .footer-left {
+            flex: 0 0 auto;
         }
 
-        .right {
-            float: right;
+        .footer-right {
+            flex: 0 0 auto;
+            text-align: right;
+        }
+
+        .footer-right p {
+            margin: 5px 0;
+        }
+
+        /* Membership image */
+        .membership-image {
+            text-align: left;
+        }
+
+        .membership-img {
+            max-width: 200px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
 
@@ -1314,19 +1334,30 @@
 
             /* Mobile footer */
             footer .container {
+                flex-direction: column;
                 text-align: center;
                 padding: 20px 15px;
+                gap: 20px;
             }
 
-            .left, .right {
-                float: none;
+            .footer-left,
+            .footer-right {
+                flex: none;
                 text-align: center;
-                margin-bottom: 10px;
                 width: 100%;
             }
 
-            .right {
-                margin-bottom: 0;
+            .footer-right p {
+                margin: 8px 0;
+            }
+
+            /* Mobile membership image */
+            .membership-image {
+                text-align: center;
+            }
+
+            .membership-img {
+                max-width: 150px;
             }
         }
 
@@ -1436,6 +1467,11 @@
                 width: 150px;
                 margin: 10px auto 0 auto;
             }
+
+            /* Smaller mobile membership image */
+            .membership-img {
+                max-width: 120px;
+            }
         }
     </style>
 </head>
@@ -1487,10 +1523,13 @@
 
     <footer>
         <div class="container">
-            <div class="left">
-                <p><a href="mailto:info@daysbooksandrecords.com">info@daysbooksandrecords.com</a></p>
+            <div class="footer-left">
+                <div class="membership-image">
+                    <img src="{% static 'images/membership.jpg' %}" alt="Membership" class="membership-img">
+                </div>
             </div>
-            <div class="right">
+            <div class="footer-right">
+                <p><a href="mailto:info@daysbooksandrecords.com">info@daysbooksandrecords.com</a></p>
                 <p>&copy; 2025 Day's Books and Records. All rights reserved.</p>
             </div>
         </div>

@@ -31,7 +31,6 @@
                                     <h3 class="news-title">{{ article.title }}</h3>
                                     <div class="news-meta">
                                         <span class="news-date">{{ article.publish_date|date:"M j, Y" }}</span>
-                                        <span class="news-author">by {{ article.author }}</span>
                                     </div>
                                     <p class="news-excerpt">{{ article.excerpt|truncatechars:150 }}</p>
                                     <a href="{{ article.get_absolute_url }}" class="news-read-more">Read more</a>
