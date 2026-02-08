@@ -152,11 +152,13 @@
         <div class="newsletter-content">
             <h2 class="newsletter-title">Stay Updated</h2>
             <p class="newsletter-subtitle">Get the latest news about new arrivals, rare finds, and special offers</p>
-            <form class="newsletter-form">
+            <form class="newsletter-form" id="newsletter-form">
+                {% csrf_token %}
                 <div class="form-group">
-                    <input type="email" placeholder="Enter your email address" class="newsletter-input" required>
-                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                    <input type="email" name="email" id="newsletter-email" placeholder="Enter your email address" class="newsletter-input" required>
+                    <button type="submit" class="btn btn-primary" id="newsletter-submit">Subscribe</button>
                 </div>
+                <div id="newsletter-message" class="newsletter-message" style="display: none;"></div>
             </form>
         </div>
     </div>

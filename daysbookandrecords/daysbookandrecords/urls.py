@@ -22,6 +22,7 @@ urlpatterns = [
     path("cart/", home_views.cart_view, name="cart"),               # Cart page
     path("news/", home_views.news_listing, name="news_listing"),    # News listing page
     path("news/<str:news_slug>/", home_views.news_detail, name="news_detail"),  # News detail page
+    path("newsletter/subscribe/", home_views.newsletter_subscribe, name="newsletter_subscribe"),  # Newsletter subscription
 ]
 
 

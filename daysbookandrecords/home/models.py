@@ -272,3 +272,61 @@ class ContactPage(Page):
             FieldPanel('address'),
         ], heading="Contact Information"),
     ]
+
+
+# Newsletter Subscription Model
+class NewsletterSubscription(models.Model):
+    email = models.EmailField(unique=True)
+    subscribed_at = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
+    source = models.CharField(max_length=50, default='website', help_text="Source of subscription (e.g., website, admin)")
+    
+    class Meta:
+        ordering = ['-subscribed_at']
+        verbose_name = 'Newsletter Subscription'
+        verbose_name_plural = 'Newsletter Subscriptions'
+    
+    def __str__(self):
+        return self.email
+
+
+# Newsletter Integration Model
+class NewsletterIntegration(models.Model):
+    INTEGRATION_CHOICES = [
+        ('mailchimp', 'Mailchimp'),
+        ('sendgrid', 'SendGrid'),
+        ('constant_contact', 'Constant Contact'),
+        ('none', 'None'),
+    ]
+    
+    integration_type = models.CharField(
+        max_length=50, 
+        choices=INTEGRATION_CHOICES, 
+        default='none',
+        unique=True
+    )
+    is_active = models.BooleanField(default=False, help_text="Enable this integration")
+    
+    # Mailchimp credentials
+    mailchimp_api_key = models.CharField(max_length=255, blank=True, help_text="Mailchimp API Key")
+    mailchimp_list_id = models.CharField(max_length=100, blank=True, help_text="Mailchimp Audience/List ID")
+    mailchimp_server_prefix = models.CharField(max_length=10, blank=True, help_text="Mailchimp server prefix (e.g., 'us1', 'us2')")
+    
+    # SendGrid credentials
+    sendgrid_api_key = models.CharField(max_length=255, blank=True, help_text="SendGrid API Key")
+    sendgrid_list_id = models.CharField(max_length=100, blank=True, help_text="SendGrid List ID")
+    
+    # Constant Contact credentials
+    constant_contact_api_key = models.CharField(max_length=255, blank=True, help_text="Constant Contact API Key")
+    constant_contact_access_token = models.CharField(max_length=255, blank=True, help_text="Constant Contact Access Token")
+    constant_contact_list_id = models.CharField(max_length=100, blank=True, help_text="Constant Contact List ID")
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        verbose_name = 'Newsletter Integration'
+        verbose_name_plural = 'Newsletter Integrations'
+    
+    def __str__(self):
+        return f"{self.get_integration_type_display()} - {'Active' if self.is_active else 'Inactive'}"

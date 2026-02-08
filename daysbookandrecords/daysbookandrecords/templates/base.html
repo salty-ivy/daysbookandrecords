@@ -1805,6 +1805,92 @@
                 }
             });
         });
+
+        // Newsletter subscription functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const newsletterForm = document.getElementById('newsletter-form');
+            const newsletterEmail = document.getElementById('newsletter-email');
+            const newsletterSubmit = document.getElementById('newsletter-submit');
+            const newsletterMessage = document.getElementById('newsletter-message');
+
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    const email = newsletterEmail.value.trim();
+                    const submitButton = newsletterSubmit;
+                    const originalButtonText = submitButton.textContent;
+
+                    // Validate email
+                    if (!email) {
+                        showNewsletterMessage('Please enter your email address.', 'error');
+                        return;
+                    }
+
+                    // Basic email validation
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(email)) {
+                        showNewsletterMessage('Please enter a valid email address.', 'error');
+                        return;
+                    }
+
+                    // Disable submit button
+                    submitButton.disabled = true;
+                    submitButton.textContent = 'Subscribing...';
+
+                    // Get CSRF token
+                    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+                    // Send AJAX request
+                    fetch('/newsletter/subscribe/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': csrftoken
+                        },
+                        body: JSON.stringify({
+                            email: email
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            showNewsletterMessage(data.message, 'success');
+                            newsletterEmail.value = '';
+                        } else {
+                            showNewsletterMessage(data.message, 'error');
+                        }
+                    })
+                    .catch(error => {
+                        showNewsletterMessage('An error occurred. Please try again later.', 'error');
+                        console.error('Newsletter subscription error:', error);
+                    })
+                    .finally(() => {
+                        // Re-enable submit button
+                        submitButton.disabled = false;
+                        submitButton.textContent = originalButtonText;
+                    });
+                });
+            }
+
+            function showNewsletterMessage(message, type) {
+                if (!newsletterMessage) return;
+
+                newsletterMessage.textContent = message;
+                newsletterMessage.className = 'newsletter-message newsletter-message-' + type;
+                newsletterMessage.style.display = 'block';
+
+                // Scroll to message if needed
+                newsletterMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+                // Auto-hide after 5 seconds for success messages
+                if (type === 'success') {
+                    setTimeout(() => {
+                        newsletterMessage.style.display = 'none';
+                    }, 5000);
+                }
+            }
+        });
     </script>
 
     <!-- GDPR Cookie Consent Banner -->

@@ -1,8 +1,14 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.core.paginator import Paginator
 from django.db import models
-from .models import Book, Record, NewsArticle
+from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+from django.views import View
+import json
+import hashlib
+from .models import Book, Record, NewsArticle, NewsletterSubscription, NewsletterIntegration
 
 def book_detail(request, book_slug):
     """View for individual book detail page"""
@@ -236,3 +242,122 @@ def news_detail(request, news_slug):
         return render(request, 'home/news_detail.html', context)
     except NewsArticle.DoesNotExist:
         raise Http404("News article not found")
+
+
+@require_http_methods(["POST"])
+def newsletter_subscribe(request):
+    """Handle newsletter subscription via AJAX"""
+    try:
+        data = json.loads(request.body)
+        email = data.get('email', '').strip().lower()
+        
+        if not email:
+            return JsonResponse({'success': False, 'message': 'Email address is required.'}, status=400)
+        
+        # Validate email format
+        from django.core.validators import validate_email
+        from django.core.exceptions import ValidationError
+        try:
+            validate_email(email)
+        except ValidationError:
+            return JsonResponse({'success': False, 'message': 'Please enter a valid email address.'}, status=400)
+        
+        # Check if email already exists
+        subscription, created = NewsletterSubscription.objects.get_or_create(
+            email=email,
+            defaults={'is_active': True, 'source': 'website'}
+        )
+        
+        if not created:
+            if subscription.is_active:
+                return JsonResponse({'success': False, 'message': 'This email is already subscribed.'}, status=400)
+            else:
+                # Reactivate subscription
+                subscription.is_active = True
+                subscription.save()
+        
+        # Sync with third-party integrations if active
+        sync_success = False
+        sync_message = ""
+        try:
+            active_integration = NewsletterIntegration.objects.filter(is_active=True).first()
+            if active_integration and active_integration.integration_type == 'mailchimp':
+                sync_success, sync_message = sync_to_mailchimp(email, active_integration)
+        except Exception as e:
+            # Log error but don't fail the subscription
+            print(f"Error syncing to integration: {str(e)}")
+        
+        return JsonResponse({
+            'success': True, 
+            'message': 'Thank you for subscribing! You will receive our latest updates.',
+            'sync_status': sync_success,
+            'sync_message': sync_message
+        })
+        
+    except json.JSONDecodeError:
+        return JsonResponse({'success': False, 'message': 'Invalid request data.'}, status=400)
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': 'An error occurred. Please try again later.'}, status=500)
+
+
+def sync_to_mailchimp(email, integration):
+    """Sync email subscription to Mailchimp"""
+    try:
+        import requests
+        
+        if not integration.mailchimp_api_key or not integration.mailchimp_list_id:
+            return False, "Mailchimp credentials not configured"
+        
+        # Extract server prefix from API key or use provided one
+        server_prefix = integration.mailchimp_server_prefix
+        if not server_prefix and integration.mailchimp_api_key:
+            # Try to extract from API key format (key-server)
+            parts = integration.mailchimp_api_key.split('-')
+            if len(parts) > 1:
+                server_prefix = parts[-1]
+        
+        if not server_prefix:
+            return False, "Mailchimp server prefix not configured"
+        
+        mailchimp_url = f"https://{server_prefix}.api.mailchimp.com/3.0/lists/{integration.mailchimp_list_id}/members"
+        
+        # Check if member already exists
+        subscriber_hash = hashlib.md5(email.lower().encode()).hexdigest()
+        check_url = f"https://{server_prefix}.api.mailchimp.com/3.0/lists/{integration.mailchimp_list_id}/members/{subscriber_hash}"
+        
+        headers = {
+            'Authorization': f'Bearer {integration.mailchimp_api_key}',
+            'Content-Type': 'application/json'
+        }
+        
+        # Check existing member
+        response = requests.get(check_url, headers=headers)
+        
+        if response.status_code == 200:
+            # Member exists, update status
+            update_data = {
+                'status': 'subscribed',
+                'email_address': email
+            }
+            response = requests.patch(check_url, headers=headers, json=update_data)
+        elif response.status_code == 404:
+            # Member doesn't exist, create new
+            member_data = {
+                'email_address': email,
+                'status': 'subscribed'
+            }
+            response = requests.post(mailchimp_url, headers=headers, json=member_data)
+        else:
+            return False, f"Mailchimp API error: {response.status_code}"
+        
+        if response.status_code in [200, 201]:
+            return True, "Successfully synced to Mailchimp"
+        else:
+            error_data = response.json() if response.text else {}
+            error_msg = error_data.get('detail', 'Unknown error')
+            return False, f"Mailchimp sync failed: {error_msg}"
+            
+    except ImportError:
+        return False, "Requests library not installed. Install with: pip install requests"
+    except Exception as e:
+        return False, f"Mailchimp sync error: {str(e)}"

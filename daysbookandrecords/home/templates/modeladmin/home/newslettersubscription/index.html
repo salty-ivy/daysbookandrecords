@@ -1,0 +1,50 @@
+{% extends "modeladmin/index.html" %}
+
+{% block header_extra %}
+    {{ block.super }}
+    <div class="button-group" style="margin-left: 20px;">
+        <a href="{{ export_all_url }}" class="button bicolor icon icon-download">
+            Export All
+        </a>
+        <a href="{{ export_selected_url }}" class="button bicolor icon icon-download" id="export-selected-btn" style="display: none;">
+            Export Selected
+        </a>
+    </div>
+    <script>
+        // Show export selected button when items are selected
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"][name="selected"]');
+            const exportSelectedBtn = document.getElementById('export-selected-btn');
+            
+            function updateExportButton() {
+                const checked = Array.from(checkboxes).some(cb => cb.checked);
+                if (checked && exportSelectedBtn) {
+                    exportSelectedBtn.style.display = 'inline-block';
+                    // Update URL with selected IDs
+                    const selectedIds = Array.from(checkboxes)
+                        .filter(cb => cb.checked)
+                        .map(cb => cb.value)
+                        .join('&selected=');
+                    if (selectedIds) {
+                        exportSelectedBtn.href = '{{ export_selected_url }}&selected=' + selectedIds;
+                    }
+                } else if (exportSelectedBtn) {
+                    exportSelectedBtn.style.display = 'none';
+                }
+            }
+            
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', updateExportButton);
+            });
+            
+            // Also listen to "select all" checkbox
+            const selectAll = document.querySelector('input[type="checkbox"][name="selectall"]');
+            if (selectAll) {
+                selectAll.addEventListener('change', function() {
+                    setTimeout(updateExportButton, 100);
+                });
+            }
+        });
+    </script>
+{% endblock %}
+
