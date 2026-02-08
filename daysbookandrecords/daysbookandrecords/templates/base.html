@@ -50,24 +50,76 @@
 
         .header-content {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
+            justify-content: center;
             position: relative;
+            gap: 20px;
         }
 
         .header-top {
             display: flex;
             align-items: center;
-            justify-content: center;
-            position: relative;
-            width: 100%;
+            justify-content: flex-start;
+            flex: 0 0 auto;
         }
 
         .header-right {
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
+            display: none; /* Hide cart icon from desktop header */
+        }
+        
+        /* Hide cart icon container on desktop */
+        .cart-icon-container {
+            display: none;
+        }
+        
+        /* Navigation menu - centered vertically and horizontally */
+        header nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Desktop navigation menu styles */
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+        }
+        
+        .nav-menu li {
+            margin: 0;
+        }
+        
+        .nav-menu a {
+            color: #2c3e50;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+            padding: 5px 0;
+        }
+        
+        .nav-menu a:hover {
+            color: #e74c3c;
+        }
+        
+        /* Cart menu item - icon only on desktop */
+        .nav-menu a.cart-menu-item {
+            font-size: 1.2rem;
+        }
+        
+        /* Hide mobile menu toggle on desktop */
+        .mobile-menu-toggle {
+            display: none;
+        }
+        
+        /* Show cart in menu on desktop (remove mobile-only restriction) */
+        .nav-menu li.mobile-only {
+            display: list-item;
         }
 
         .cart-icon-container {
@@ -1009,6 +1061,7 @@
             /* Show mobile menu toggle */
             .mobile-menu-toggle {
                 display: flex;
+                margin-top: 10px;
             }
 
             /* Hide desktop cart, show mobile cart in menu */
@@ -1044,7 +1097,7 @@
             }
 
             /* Mobile navigation styles - Half screen drawer */
-            .nav-menu {
+            header nav .nav-menu {
                 position: fixed;
                 top: 0;
                 left: 0;
@@ -1063,6 +1116,7 @@
                 transition: transform 0.3s ease;
                 z-index: 1000;
                 box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+                display: flex;
             }
 
             .nav-menu.active {
@@ -1082,6 +1136,11 @@
                 border-bottom: 1px solid rgba(0, 0, 0, 0.1);
                 transition: all 0.3s ease;
                 background-color: transparent;
+            }
+            
+            /* On mobile, show "Cart" text */
+            .nav-menu a.cart-menu-item::after {
+                content: " Cart";
             }
 
             .nav-menu a:hover,
@@ -1508,7 +1567,7 @@
                                <li><a href="/used-books/">Used Books</a></li>
                                <li><a href="/about/">About</a></li>
                                <li><a href="/news/">News</a></li>
-                               <li class="mobile-only"><a href="/cart/">🛒 Cart</a></li>
+                               <li><a href="/cart/" class="cart-menu-item">🛒</a></li>
                             </ul>
                         </nav>
         </div>
