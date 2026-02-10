@@ -117,10 +117,6 @@
             display: none;
         }
         
-        /* Show cart in menu on desktop (remove mobile-only restriction) */
-        .nav-menu li.mobile-only {
-            display: list-item;
-        }
 
         .cart-icon-container {
             position: relative;
@@ -189,7 +185,7 @@
         .hero-image {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: fill;
             object-position: center;
         }
 
@@ -514,7 +510,7 @@
         }
 
         /* Hide mobile-only items on desktop */
-        .mobile-only {
+        .nav-menu .mobile-only {
             display: none;
         }
 
@@ -1069,7 +1065,7 @@
                 display: none;
             }
 
-            .mobile-only {
+            .nav-menu .mobile-only {
                 display: block;
             }
 
@@ -1176,7 +1172,7 @@
             /* Mobile image optimizations */
             .hero-image {
                 height: 250px;
-                object-fit: cover;
+                object-fit: fill;
                 object-position: center;
             }
 
