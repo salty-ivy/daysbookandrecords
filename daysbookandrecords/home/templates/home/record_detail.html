@@ -66,8 +66,8 @@
                 {% endif %}
 
                                        <div class="record-actions">
-                           <button class="btn btn-primary btn-large" onclick="addRecordToCart()">Add to Cart</button>
-                           <button class="btn btn-outline btn-large">Add to Wishlist</button>
+                           <button class="btn btn-primary btn-large add-to-cart-btn" onclick="addRecordToCart()" style="display: none;">Add to Cart</button>
+                           <button class="btn btn-outline btn-large" onclick="addRecordToWishlist()">Add to Wishlist</button>
                        </div>
 
                 {% if record.sub_genre.all %}
@@ -128,6 +128,55 @@
         };
         
         addToCart(recordData);
+    }
+    
+    function addRecordToWishlist() {
+        const recordData = {
+            id: '{{ record.id }}',
+            type: 'record',
+            title: '{{ record.title|escapejs }}',
+            artist: '{{ record.artist|escapejs }}',
+            price: {{ record.price }},
+            image: {% if record.image %}'{{ record.image.url }}'{% else %}null{% endif %},
+            condition: '{{ record.get_condition_display|escapejs }}',
+            format: '{{ record.get_format_display|escapejs }}',
+            url: '{{ record.get_absolute_url }}'
+        };
+        
+        // Get existing wishlist from localStorage
+        let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+        
+        // Check if item already exists
+        const existingItem = wishlist.find(item => 
+            item.id === recordData.id && item.type === recordData.type
+        );
+        
+        if (existingItem) {
+            alert('This item is already in your wishlist!');
+            return;
+        }
+        
+        // Add to wishlist
+        wishlist.push({
+            ...recordData,
+            addedAt: new Date().toISOString()
+        });
+        
+        localStorage.setItem('wishlist', JSON.stringify(wishlist));
+        
+        // Show success message
+        showWishlistMessage('Item added to wishlist!');
+    }
+    
+    function showWishlistMessage(message) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'cart-message';
+        messageDiv.textContent = message;
+        document.body.appendChild(messageDiv);
+        
+        setTimeout(() => {
+            messageDiv.remove();
+        }, 3000);
     }
 </script>
 {% endblock %}

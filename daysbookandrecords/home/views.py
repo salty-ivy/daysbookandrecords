@@ -209,6 +209,10 @@ def cart_view(request):
     """View for cart page"""
     return render(request, 'home/cart_page.html')
 
+def wishlist_view(request):
+    """View for wishlist page"""
+    return render(request, 'home/wishlist_page.html')
+
 def news_listing(request):
     """View for news listing page"""
     # Get published news articles

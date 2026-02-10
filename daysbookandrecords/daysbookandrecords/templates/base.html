@@ -107,9 +107,9 @@
             color: #e74c3c;
         }
         
-        /* Cart menu item - icon only on desktop */
-        .nav-menu a.cart-menu-item {
-            font-size: 1.2rem;
+        /* Wishlist menu item */
+        .nav-menu a.wishlist-menu-item {
+            font-size: 1rem;
         }
         
         /* Hide mobile menu toggle on desktop */
@@ -1133,11 +1133,6 @@
                 transition: all 0.3s ease;
                 background-color: transparent;
             }
-            
-            /* On mobile, show "Cart" text */
-            .nav-menu a.cart-menu-item::after {
-                content: " Cart";
-            }
 
             .nav-menu a:hover,
             .nav-menu a:focus {
@@ -1563,7 +1558,8 @@
                                <li><a href="/used-books/">Used Books</a></li>
                                <li><a href="/about/">About</a></li>
                                <li><a href="/news/">News</a></li>
-                               <li><a href="/cart/" class="cart-menu-item">🛒</a></li>
+                               <li style="display: none;"><a href="/cart/" class="cart-menu-item">🛒</a></li>
+                               <li><a href="/wishlist/" class="wishlist-menu-item">❤️ My Wishlist</a></li>
                             </ul>
                         </nav>
         </div>

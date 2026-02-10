@@ -1,0 +1,100 @@
+<!-- wishlist_page.html -->
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block title %}My Wishlist - Days Books & Records{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">My Wishlist</h1>
+            <p class="page-intro">Your saved items</p>
+        </div>
+        
+        <div class="cart-content">
+            <div id="wishlist-items-container">
+                <!-- Wishlist items will be loaded here via JavaScript -->
+            </div>
+            
+            <div id="empty-wishlist-message" class="empty-cart" style="display: none;">
+                <div class="empty-cart-content">
+                    <h2>Your wishlist is empty</h2>
+                    <p>Start browsing to add items to your wishlist</p>
+                    <div class="empty-cart-actions">
+                        <a href="/used-books/" class="btn btn-primary">Browse Used Books</a>
+                        <a href="/new-books/" class="btn btn-outline">Browse New Books</a>
+                        <a href="/records/" class="btn btn-tertiary">Browse Records</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        loadWishlistItems();
+    });
+    
+    function loadWishlistItems() {
+        const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+        const container = document.getElementById('wishlist-items-container');
+        const emptyMessage = document.getElementById('empty-wishlist-message');
+        
+        if (wishlist.length === 0) {
+            container.style.display = 'none';
+            emptyMessage.style.display = 'block';
+            return;
+        }
+        
+        container.style.display = 'block';
+        emptyMessage.style.display = 'none';
+        
+        let wishlistHTML = '';
+        
+        wishlist.forEach((item, index) => {
+            const itemUrl = item.url || (item.type === 'book' ? `/item/books/${item.id}/` : `/item/records/${item.id}/`);
+            
+            wishlistHTML += `
+                <div class="cart-item" data-index="${index}">
+                    <div class="cart-item-image">
+                        <a href="${itemUrl}">
+                            ${item.image ? 
+                                `<img src="${item.image}" alt="${item.title}" class="cart-item-cover">` : 
+                                `<div class="cart-item-placeholder">
+                                    <span>${item.title.charAt(0)}</span>
+                                 </div>`
+                            }
+                        </a>
+                    </div>
+                    <div class="cart-item-details">
+                        <h3 class="cart-item-title">
+                            <a href="${itemUrl}" style="text-decoration: none; color: inherit;">${item.title}</a>
+                        </h3>
+                        <p class="cart-item-creator">
+                            ${item.type === 'book' ? 'by ' + (item.author || 'Unknown Author') : 'by ' + (item.artist || 'Unknown Artist')}
+                        </p>
+                        <span class="condition-badge condition-${item.condition.toLowerCase()}">${item.condition}</span>
+                        ${item.format ? `<span class="format-badge format-${item.format.toLowerCase()}">${item.format}</span>` : ''}
+                        <div class="cart-item-price">£${item.price.toFixed(2)}</div>
+                    </div>
+                    <div class="cart-item-actions">
+                        <button class="btn btn-small btn-outline" onclick="removeFromWishlist(${index})">Remove</button>
+                    </div>
+                </div>
+            `;
+        });
+        
+        container.innerHTML = wishlistHTML;
+    }
+    
+    function removeFromWishlist(index) {
+        const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+        wishlist.splice(index, 1);
+        localStorage.setItem('wishlist', JSON.stringify(wishlist));
+        loadWishlistItems();
+    }
+</script>
+{% endblock %}
+
